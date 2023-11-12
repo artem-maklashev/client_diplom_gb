@@ -1,12 +1,12 @@
 import TradeMark from "./TradeMark";
-import Types from "./Types";
+import ProductTypes from "./ProductTypes";
 
 class Product {
     id: number;
-    pType: Types;
+    pType: ProductTypes;
     tradeMark: TradeMark;
 
-    constructor(id: number, pType: Types, tradeMark: TradeMark) {
+    constructor(id: number, pType: ProductTypes, tradeMark: TradeMark) {
         this.id = id;
         this.pType = pType;
         this.tradeMark = tradeMark;

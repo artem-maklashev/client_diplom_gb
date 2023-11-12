@@ -1,6 +1,6 @@
 import Product from "../Product";
 import TradeMark from "../TradeMark";
-import Types from "../Types";
+import ProductTypes from "../ProductTypes";
 import BoardType from "./BoardType";
 import Edge from "./Edge";
 import Length from "./Length";
@@ -14,7 +14,7 @@ class GypsumBoard extends Product {
     width: Width;
     length: Length;
 
-    constructor(id: number, pType: Types, tradeMark: TradeMark, boardType: BoardType, edge: Edge, thickness: Thickness, width: Width, length: Length) {
+    constructor(id: number, pType: ProductTypes, tradeMark: TradeMark, boardType: BoardType, edge: Edge, thickness: Thickness, width: Width, length: Length) {
         super(id, pType, tradeMark);
         this.boardType = boardType;
         this.edge = edge;

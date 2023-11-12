@@ -1,4 +1,4 @@
-class Types {
+class ProductTypes {
     id: number;
     name: string;
 
@@ -7,4 +7,4 @@ class Types {
         this.name = name;
     }
 }
-export default Types;
+export default ProductTypes;
