@@ -7,6 +7,7 @@ import Length from "./Length";
 import Thickness from "./Thickness";
 import Width from "./Width";
 
+
 class GypsumBoard extends Product {
     boardType: BoardType;
     edge: Edge;
@@ -23,5 +24,8 @@ class GypsumBoard extends Product {
         this.length = length;
     }
 
+    toString(): string {
+        return this.tradeMark.name + " тип " + this.boardType.name + " " + this.edge.name + "-" + this.thickness.value + "-" + this.width.value + this.length.value ;
+    }
 }
 export default GypsumBoard;
