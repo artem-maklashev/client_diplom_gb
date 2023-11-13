@@ -1,16 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
+import GypsumBoardTable from "./GypsumBoardTable";
 
-interface GypsumBoardShowProps {
-}
+interface GypsumBoardShowProps {}
 
 const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
     const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<string | null>(null);
-
-    let monthIndex: number = 4;
-    let year: number = 2023;
+    const [monthIndex, setMonthIndex] = useState<number>(4); // начальное значение месяца
+    const [year, setYear] = useState<number>(2023); // начальное значение года
 
     const fetchGypsumBoardData = useCallback(async () => {
         try {
@@ -41,7 +40,6 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
     useEffect(() => {
         fetchGypsumBoardData();
     }, [fetchGypsumBoardData]);
-
     const calculateTotal = <K extends keyof GypsumBoardInputData>(data: GypsumBoardInputData[], property: K): number => {
         return data.reduce((total, item) => total + Number(item[property]), 0);
     };
@@ -52,42 +50,42 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
         return totalTotal > 0 ? (((totalTotal - totalFact) * 100) / totalTotal).toFixed(2) + "%" : "---";
     };
 
+    const handleMonthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMonthIndex(parseInt(event.target.value, 10));
+        fetchGypsumBoardData();
+    };
+
+    const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setYear(parseInt(event.target.value, 10));
+        fetchGypsumBoardData();
+    };
+
+    // ... остальной код остается без изменений
+
     return (
         <div className="container">
-            <div className="row">
-                <div className="col-7">
-                    <div className="table-responsive-sm">
-                        <table className="table table-striped table-bordered table-hover table-auto" id="gypsumBoardTable">
-                            <thead className="table-dark">
-                            <tr>
-                                <th>Гипсокартон</th>
-                                <th>План</th>
-                                <th>Факт</th>
-                                <th>Процент брака</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {gypsumBoardData.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.boardTitle}</td>
-                                    <td>{item.planValue}</td>
-                                    <td>{item.factValue}</td>
-                                    <td>{item.total > 0 ? ((item.total - item.factValue) * 100 / item.total).toFixed(2) + "%" : "---"}</td>
-                                </tr>
-                            ))}
-                            <tr>
-                                <td><strong>Итого</strong></td>
-                                <td><strong>{calculateTotal(gypsumBoardData, 'planValue')}</strong></td>
-                                <td><strong>{calculateTotal(gypsumBoardData, 'factValue')}</strong></td>
-                                <td><strong>{calculatePercentageTotal(gypsumBoardData)}</strong></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div>
+                <label htmlFor="monthInput">Месяц:</label>
+                <input
+                    type="month"
+                    id="monthInput"
+                    value={`${year}-${monthIndex.toString().padStart(2, '0')}`}
+                    onChange={handleMonthChange}
+                />
             </div>
+            <div>
+                <label htmlFor="yearInput">Год:</label>
+                <input
+                    type="number"
+                    id="yearInput"
+                    value={year}
+                    onChange={handleYearChange}
+                />
+            </div>
+            {/* Вместо прорисовки таблицы здесь используем GypsumBoardTable */}
+            <GypsumBoardTable data={gypsumBoardData} />
         </div>
     );
-}
+};
 
 export default GypsumBoardShow;
