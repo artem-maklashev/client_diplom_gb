@@ -65,22 +65,27 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
     return (
         <div className="container">
             <div>
-                <label htmlFor="monthInput">Месяц:</label>
+                <div className="input-group mb-3">
+                    <span className="input-group-text" id="basic-addon1">Месяц</span>
+                {/*<label htmlFor="monthInput">Месяц:</label>*/}
                 <input
                     type="month"
                     id="monthInput"
                     value={`${year}-${monthIndex.toString().padStart(2, '0')}`}
                     onChange={handleMonthChange}
                 />
+                </div>
             </div>
             <div>
-                <label htmlFor="yearInput">Год:</label>
+                <div className="input-group mb-3">
+                    <span className="input-group-text" id="basic-addon2">Год</span>
                 <input
                     type="number"
                     id="yearInput"
                     value={year}
                     onChange={handleYearChange}
                 />
+                </div>
             </div>
             {/* Вместо прорисовки таблицы здесь используем GypsumBoardTable */}
             <GypsumBoardTable data={gypsumBoardData} />
