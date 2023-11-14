@@ -8,75 +8,95 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
     const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [errorText, setErrorText] = useState<string | null>(null);
-    const [monthIndex, setMonthIndex] = useState<number>(4); // начальное значение месяца
-    const [year, setYear] = useState<number>(2023); // начальное значение года
+    const [selectedDate, setSelectedDate] = useState<string>(getCurrentDate()); // Set initial date to today
 
-    useEffect(() => {
-        const fetchGypsumBoardData = async () => {
-            try {
-                setIsLoading(true);
-                const params = new URLSearchParams({
-                    month: monthIndex.toString(),
-                    year: year.toString(),
-                });
+    const fetchGypsumBoardData = async () => {
+        try {
+            setIsLoading(true);
+            const [year, month, day] = selectedDate.split('-');
+            const params = new URLSearchParams({
+                day: day,
+                month: month,
+                year: year,
+            });
 
-                const response = await fetch(`http://localhost:8080/api/allboard?${params.toString()}`);
+            const response = await fetch(`http://localhost:8080/api/allboard?${params.toString()}`);
 
-                if (!response.ok) {
-                    throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
-                }
-
-                const data: GypsumBoardInputData[] = await response.json();
-                setErrorText(null);
-                setGypsumBoardData(data);
-            } catch (error: any) {
-                console.error(`Произошла ошибка: ${error.message}`);
-                setErrorText(error.message);
-                setGypsumBoardData([]);
-            } finally {
-                setIsLoading(false);
+            if (!response.ok) {
+                throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
             }
-        };
 
-        fetchGypsumBoardData();
-    }, [monthIndex, year]);
-
-    const handleMonthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newMonthIndex = parseInt(event.target.value.substring(5), 10);
-        console.log('Month changed to:', newMonthIndex);
-        setMonthIndex(newMonthIndex);
+            const data: GypsumBoardInputData[] = await response.json();
+            setErrorText(null);
+            setGypsumBoardData(data);
+        } catch (error: any) {
+            console.error(`Произошла ошибка: ${error.message}`);
+            setErrorText(error.message);
+            setGypsumBoardData([]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newYear = parseInt(event.target.value, 10);
-        console.log('Year changed to:', newYear);
-        setYear(newYear);
+    useEffect(() => {
+        // Update data only if the date is valid
+        if (validateDate(selectedDate)) {
+            fetchGypsumBoardData();
+        }
+    }, [selectedDate]);
+
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const enteredDate = event.target.value;
+        console.log(enteredDate)
+        if (validateDate(enteredDate)) {
+            setSelectedDate(enteredDate);
+            console.log("УСТАНОВЛЕНА НОВАЯ ДАТА")
+            setErrorText(null); // Clear any previous error message
+        } else {
+            // Handle invalid date
+            setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
+        }
+    };
+
+    // Function to validate date format (DD-MM-YYYY)
+    const validateDate = (date: string): boolean => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+        return regex.test(date);
+    };
+
+    // Function to get the current date in YYYY-MM-DD format (required by input type="date")
+    function getCurrentDate(): string {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = (now.getMonth() + 1).toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    // Function to get the localized date format
+    const getLocalizedDateFormat = (): string => {
+        const exampleDate = new Date(2023, 0, 1); // January 1, 2023
+        return exampleDate.toLocaleDateString(undefined, {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+        });
     };
 
     return (
         <div className="container">
             <div>
                 <div className="input-group mb-3">
-                    <span className="input-group-text" id="basic-addon1">Месяц</span>
+                    <span className="input-group-text" id="basic-addon1">Дата</span>
                     <input
-                        type="month"
-                        id="monthInput"
-                        value={`${year}-${(monthIndex).toString().padStart(2, '0')}`}
-                        onChange={handleMonthChange}
+                        type="date"
+                        id="dateInput"
+                        value={selectedDate}
+                        onChange={handleDateChange}
                     />
                 </div>
             </div>
-            <div>
-                <div className="input-group mb-3">
-                    <span className="input-group-text" id="basic-addon2">Год</span>
-                    <input
-                        type="number"
-                        id="yearInput"
-                        value={year}
-                        onChange={handleYearChange}
-                    />
-                </div>
-            </div>
+            {errorText && <div className="error-message">{errorText}</div>}
             <GypsumBoardTable data={gypsumBoardData} />
         </div>
     );

@@ -13,7 +13,7 @@ const GypsumBoardTable: React.FC<GypsumBoardTableProps> = ({ data }) => {
     const calculatePercentageTotal = (): string => {
         const totalFact = calculateTotal('factValue');
         const totalTotal = calculateTotal('total');
-        return totalTotal > 0 ? (((totalTotal - totalFact) * 100) / totalTotal).toFixed(2) + "%" : "---";
+        return totalTotal > 0 ? (((totalTotal - totalFact) * 100) / totalTotal).toFixed(2) + "%" : "0";
     };
 
     return (
@@ -38,8 +38,8 @@ const GypsumBoardTable: React.FC<GypsumBoardTableProps> = ({ data }) => {
                 ))}
                 <tr>
                     <td><strong>Итого</strong></td>
-                    <td><strong>{calculateTotal('planValue')}</strong></td>
-                    <td><strong>{calculateTotal('factValue')}</strong></td>
+                    <td><strong>{calculateTotal('planValue').toFixed(2)}</strong></td>
+                    <td><strong>{calculateTotal('factValue').toFixed(2)}</strong></td>
                     <td><strong>{calculatePercentageTotal()}</strong></td>
                 </tr>
                 </tbody>
