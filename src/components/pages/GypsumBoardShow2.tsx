@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./GypsumBoardTable";
+import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
 
 interface GypsumBoardShowProps {
 }
@@ -117,11 +118,22 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
                 </div>
             </div>
             </div>
-
+            <div className='row'>
 
             {errorText && <div className="error-message">{errorText}</div>}
+                <div className='col-6'>
+                    <GypsumBoardTable data={gypsumBoardData} />
 
-            <GypsumBoardTable data={gypsumBoardData} />
+                </div>
+                <div className='col-6'>
+                    <GypsumBoardChart raw_data={gypsumBoardData} />
+
+                </div>
+                
+            </div>
+                   
+          
+            
         </div>
     );
 };

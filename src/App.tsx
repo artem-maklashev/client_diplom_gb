@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route, BrowserRouter as Router,  Navigate, Routes } from 'react-router-dom';
 import NavigationBar from './components/navigation/NavigationBar';
-import GypsumBoardShow from './components/pages/GypsumBoardShow';
+// import GypsumBoardShow from './components/pages/GypsumBoardShow';
 import MainPage from './components/pages/MainPage';
 import GypsumBoardShow2 from "./components/pages/GypsumBoardShow2";
 
