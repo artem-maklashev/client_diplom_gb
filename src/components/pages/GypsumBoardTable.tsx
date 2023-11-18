@@ -25,6 +25,7 @@ const GypsumBoardTable: React.FC<GypsumBoardTableProps> = ({ data }) => {
                     <th>План</th>
                     <th>Факт</th>
                     <th>Процент брака</th>
+                    <th>Отклонение</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,7 @@ const GypsumBoardTable: React.FC<GypsumBoardTableProps> = ({ data }) => {
                         <td>{item.planValue}</td>
                         <td>{item.factValue}</td>
                         <td>{item.total > 0 ? ((item.total - item.factValue) * 100 / item.total).toFixed(2) + "%" : "---"}</td>
+                        <td align="right">{(item.factValue - item.planValue).toFixed(2)}</td>
                     </tr>
                 ))}
                 <tr>
@@ -41,6 +43,7 @@ const GypsumBoardTable: React.FC<GypsumBoardTableProps> = ({ data }) => {
                     <td><strong>{calculateTotal('planValue').toFixed(2)}</strong></td>
                     <td><strong>{calculateTotal('factValue').toFixed(2)}</strong></td>
                     <td><strong>{calculatePercentageTotal()}</strong></td>
+                    <td align="right"><strong>{(calculateTotal('factValue') - calculateTotal('planValue')).toFixed(2)}</strong></td>
                 </tr>
                 </tbody>
             </table>
