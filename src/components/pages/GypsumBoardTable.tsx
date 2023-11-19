@@ -17,7 +17,7 @@ const GypsumBoardTable: React.FC<GypsumBoardTableProps> = ({ data }) => {
     };
 
     return (
-        <div className="table-responsive-sm">
+        <div className="table-responsive-lg">
             <table className="table table-striped table-bordered table-hover table-auto" id="gypsumBoardTable">
                 <thead className="table-dark">
                 <tr>

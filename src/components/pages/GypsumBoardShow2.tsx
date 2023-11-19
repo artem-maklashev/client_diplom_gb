@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./GypsumBoardTable";
 import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
+import {Tab, Tabs} from "react-bootstrap";
 
 interface GypsumBoardShowProps {
 }
@@ -121,14 +122,31 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
             <div className='row'>
 
             {errorText && <div className="error-message">{errorText}</div>}
-                <div className='col-6'>
-                    <GypsumBoardTable data={gypsumBoardData} />
+                {/*<div className='col-6'>*/}
+                {/*    <GypsumBoardTable data={gypsumBoardData} />*/}
 
-                </div>
-                <div className='col-6'>
-                    <GypsumBoardChart raw_data={gypsumBoardData} />
+                {/*</div>*/}
+                {/*<div className='col-6'>*/}
+                {/*    <GypsumBoardChart raw_data={gypsumBoardData} />*/}
+                <div className="container container-lg">
+                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
+                        <Tab eventKey="table" title="Таблица">
+                            <GypsumBoardTable data={gypsumBoardData} />
+                        </Tab>
+                        <Tab eventKey="bar" title="График">
+                            <div className="container-md">
+                                <GypsumBoardChart raw_data={gypsumBoardData} />
+                            </div>
 
+                        </Tab>
+                        <Tab eventKey="opinion" title="В разработке">
+                            В разработке...
+                        </Tab>
+                    </Tabs>
                 </div>
+
+
+
                 
             </div>
                    
