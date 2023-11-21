@@ -1,18 +1,22 @@
+import GypsumBoard from "../gypsumBoard/GypsumBoard";
+import Shift from "../Shift";
+import ProductTypes from "../ProductTypes";
+
 class ProductionList {
     id: number;
-    pStart: Date;
-    pEnd: Date;
-    shiftId: number;
-    pTypeId: number;
-    pDate: Date;
+    productionStart: Date;
+    productionEnd: Date;
+    productionDate: Date;
+    shiftId: Shift;
+    pTypeId: ProductTypes;
 
-    constructor(id: number, pStart: Date, pEnd: Date, shiftID: number,pTypeId: number, pDate: Date) {
+    constructor(id: number, pStart: Date, pEnd: Date, pDate: Date, shiftID: Shift,pTypeId: ProductTypes ) {
         this.id = id;
-        this.pStart = pStart;
-        this.pEnd = pEnd;
+        this.productionStart = pStart;
+        this.productionEnd = pEnd;
+        this.productionDate = pDate;
         this.shiftId = shiftID;
         this.pTypeId = pTypeId;
-        this.pDate = pDate;
     }
 }
 export default ProductionList;

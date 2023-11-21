@@ -20,6 +20,12 @@ const EdgeChart: React.FC<BoardProductionProps> = ({ edgeData }) => {
     const data = edgeData.filter(
         (value) => value.gypsumBoardCategory.id === 2 || value.gypsumBoardCategory.id === 3
     );
+    if  (data.length === 0) {
+        return <div>Данных нет</div>;
+    } else {
+        console.log("Получены данные в размере " + data.length);
+    }
+
 
     let data1: ChartData[] = [];
 

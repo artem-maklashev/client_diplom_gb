@@ -14,7 +14,7 @@ interface GypsumBoardShowProps {
 const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionProps) => {
     const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
-    const [selectedStartDate, setSelectedStartDate] = useState<string>(getCurrentDate()); // Set initial date to today
+    const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
     const [productionData, setProductionData] = useState<BoardProduction[]>([]);
 
@@ -57,7 +57,9 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
 
             const data: BoardProduction[] = await response.json();
             setErrorText(null);
+            console.log(data[0].productionList.id);
             setProductionData(data);
+            console.log("Получены данные по выпуску продукции " + data.length);
         } catch (error: any) {
             console.error(`Произошла ошибка: ${error.message}`);
             setErrorText(error.message);
@@ -109,6 +111,17 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
         return `${year}-${month}-${day}`;
     }
 
+    function getFirstDate(): string {
+
+        const now = new Date();
+        const firstDay = new Date(now.getFullYear(), now.getUTCMonth() + 1, 1);
+        const year = firstDay.getUTCFullYear();
+        const month = (firstDay.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+
+
+        return `${year}-${month}-01`;
+    }
+
     // Function to get the localized date format
     const getLocalizedDateFormat = (): string => {
         const exampleDate = new Date(2023, 0, 1); // January 1, 2023
@@ -118,6 +131,8 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
             year: 'numeric',
         });
     };
+
+
 
     return (
         <div className="container">
@@ -158,6 +173,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
             <div className='row'>
 
                 {errorText && <div className="error-message">{errorText}</div>}
+                {}
                 {/*<div className='col-6'>*/}
                 {/*    <GypsumBoardTable data={gypsumBoardData} />*/}
 
@@ -173,11 +189,11 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
                             <div className="container-lg">
                                 <div className="row">
                                     <div className="col-6">
-                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
+                                        <GypsumBoardChart raw_data={gypsumBoardData} />
                                     </div>
                                     <div className="col-6">
                                         <div className="row">
-                                            <EdgeChart edgeData={productionData}/>
+                                            <EdgeChart edgeData={productionData} />
                                         </div>
                                         <div className="row">
                                             <DefectChart data={productionData} />
