@@ -3,7 +3,7 @@ import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./GypsumBoardTable";
 import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
 import {Tab, Tabs} from "react-bootstrap";
-
+import './MyStyle.css'
 interface GypsumBoardShowProps {
 }
 
@@ -128,8 +128,8 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
                 {/*</div>*/}
                 {/*<div className='col-6'>*/}
                 {/*    <GypsumBoardChart raw_data={gypsumBoardData} />*/}
-                <div className="container container-lg">
-                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
+                <div className="container container-lg"  >
+                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
                         <Tab eventKey="table" title="Таблица">
                             <GypsumBoardTable data={gypsumBoardData} />
                         </Tab>
@@ -137,9 +137,8 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
                             <div className="container-md">
                                 <GypsumBoardChart raw_data={gypsumBoardData} />
                             </div>
-
                         </Tab>
-                        <Tab eventKey="opinion" title="В разработке">
+                        <Tab eventKey="opinion" title="В разработке" disabled={true}>
                             В разработке...
                         </Tab>
                     </Tabs>
