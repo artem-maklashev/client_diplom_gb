@@ -28,6 +28,7 @@ const DefectChart: React.FC<BoardProductionProps> = ({data}) => {
         if (data.length === 0) {
             return <div>Данных нет</div>;
         } else {
+            data =data.sort((a, b) => (a.productionList.productionDate < b.productionList.productionDate ? -1 : 1));
             console.log("Получены данные в размере " + data.length);
              const defectData = data.filter(
                 (item) => item.gypsumBoardCategory.id <= 3);
