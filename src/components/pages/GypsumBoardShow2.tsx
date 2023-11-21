@@ -4,14 +4,19 @@ import GypsumBoardTable from "./GypsumBoardTable";
 import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
 import {Tab, Tabs} from "react-bootstrap";
 import './MyStyle.css'
+import BoardProduction from "../../model/production/BoardProduction";
+import EdgeChart from "./gypsumBoardElements/EdgeChart";
+import DefectChart from "./gypsumBoardElements/DefectChart";
+
 interface GypsumBoardShowProps {
 }
 
-const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
+const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionProps) => {
     const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getCurrentDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
+    const [productionData, setProductionData] = useState<BoardProduction[]>([]);
 
     const fetchGypsumBoardData = useCallback(async () => {
         try {
@@ -36,6 +41,29 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
             setGypsumBoardData([]);
         }
     }, [selectedStartDate, selectedEndDate]);
+    const fetchProductionData = useCallback(async () => {
+        try {
+
+            const params = new URLSearchParams({
+                startDate: selectedStartDate,
+                endDate: selectedEndDate
+            });
+
+            const response = await fetch(`http://localhost:8080/api/allboard/production?${params.toString()}`);
+
+            if (!response.ok) {
+                throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
+            }
+
+            const data: BoardProduction[] = await response.json();
+            setErrorText(null);
+            setProductionData(data);
+        } catch (error: any) {
+            console.error(`Произошла ошибка: ${error.message}`);
+            setErrorText(error.message);
+            setProductionData([]);
+        }
+    }, [selectedStartDate, selectedEndDate]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,6 +72,14 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
 
         fetchData();
     }, [selectedStartDate, selectedEndDate, fetchGypsumBoardData]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetchProductionData();
+        };
+
+        fetchData();
+    }, [selectedStartDate, selectedEndDate, fetchProductionData]);
 
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,40 +138,52 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
                         </div>
                     </div>
                     <div className="row">
-                    <div className="col-md-6 mb-3 mx-auto">
-                        <div className="input-group">
+                        <div className="col-md-6 mb-3 mx-auto">
+                            <div className="input-group">
               <span className="input-group-text" id="basic-addon1">
                 Дата окончания
               </span>
-                            <input
-                                type="date"
-                                id="endDateInput"
-                                value={selectedEndDate}
-                                onChange={handleDateChange}
-                                className="form-control"
-                            />
+                                <input
+                                    type="date"
+                                    id="endDateInput"
+                                    value={selectedEndDate}
+                                    onChange={handleDateChange}
+                                    className="form-control"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
             <div className='row'>
 
-            {errorText && <div className="error-message">{errorText}</div>}
+                {errorText && <div className="error-message">{errorText}</div>}
                 {/*<div className='col-6'>*/}
                 {/*    <GypsumBoardTable data={gypsumBoardData} />*/}
 
                 {/*</div>*/}
                 {/*<div className='col-6'>*/}
                 {/*    <GypsumBoardChart raw_data={gypsumBoardData} />*/}
-                <div className="container container-lg"  >
-                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
+                <div className="container container-fluid">
+                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                         <Tab eventKey="table" title="Таблица">
-                            <GypsumBoardTable data={gypsumBoardData} />
+                            <GypsumBoardTable data={gypsumBoardData}/>
                         </Tab>
                         <Tab eventKey="bar" title="График">
-                            <div className="container-md">
-                                <GypsumBoardChart raw_data={gypsumBoardData} />
+                            <div className="container-lg">
+                                <div className="row">
+                                    <div className="col-6">
+                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
+                                    </div>
+                                    <div className="col-6">
+                                        <div className="row">
+                                            <EdgeChart edgeData={productionData}/>
+                                        </div>
+                                        <div className="row">
+                                            <DefectChart data={productionData} />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </Tab>
                         <Tab eventKey="opinion" title="В разработке" disabled={true}>
@@ -143,14 +191,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props) => {
                         </Tab>
                     </Tabs>
                 </div>
-
-
-
-                
             </div>
-                   
-          
-            
         </div>
     );
 };
