@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./GypsumBoardTable";
 import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
-import {Tab, Tabs} from "react-bootstrap";
+import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import './MyStyle.css'
 import BoardProduction from "../../model/production/BoardProduction";
 import EdgeChart from "./gypsumBoardElements/EdgeChart";
@@ -135,11 +135,11 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
 
 
     return (
-        <div className="row mt-5">
-            <div className="container mt-auto">
-            <div className="row mt-5">
-                <div className="col-md-3 mb-3 mx-auto">
-                    <div className="input-group">
+        <div className="row mt-5" style={{ backgroundColor: '#b5b5b5' }}>
+            <Container className="container mt-auto">
+                <div className="row mt-5">
+                    <div className="col-md-3 mb-3 mx-auto">
+                        <div className="input-group">
                           <span className="input-group-text" id="basic-addon1">
                             Дата начала
                           </span>
@@ -150,77 +150,79 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
                                 onChange={handleDateChange}
                                 className="form-control"
                             />
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-3 mb-3 mx-auto">
-                        <div className="input-group">
+                    <div className="row">
+                        <div className="col-md-3 mb-3 mx-auto">
+                            <div className="input-group">
                                 <span className="input-group-text" id="basic-addon1">
                                     Дата окончания
                                 </span>
-                            <input
-                                type="date"
-                                id="endDateInput"
-                                value={selectedEndDate}
-                                onChange={handleDateChange}
-                                className="form-control"
-                            />
+                                <input
+                                    type="date"
+                                    id="endDateInput"
+                                    value={selectedEndDate}
+                                    onChange={handleDateChange}
+                                    className="form-control"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Container>
 
-            <div className='row'>
 
-                {errorText && <div className="error-message">{errorText}</div>}
-                {}
-                {/*<div className='col-6'>*/}
-                {/*    <GypsumBoardTable data={gypsumBoardData} />*/}
+            {errorText && <div className="error-message">{errorText}</div>}
+            <Container>
+                <Row xs={1} md={1} lg={1}>
+                    <Col className="d-flex justify-content-center">
+                        <div className="col-lg-11 ">
+                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
+                                <Tab eventKey="table" title="Таблица">
+                                    <Col className="d-flex justify-content-center">
+                                        <div className="col-sm-10 ">
+                                            <GypsumBoardTable data={gypsumBoardData}/>
+                                        </div>
+                                    </Col>
+                                </Tab>
+                                <Tab eventKey="bar" title="График">
 
-                {/*</div>*/}
-                {/*<div className='col-6'>*/}
-                {/*    <GypsumBoardChart raw_data={gypsumBoardData} />*/}
-                <div className="GypsumBoardShow">
-                    <div className="container container-xxl mt-5">
-                        <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
-                            <Tab eventKey="table" title="Таблица">
-                                <GypsumBoardTable data={gypsumBoardData}/>
-                            </Tab>
-                            <Tab eventKey="bar" title="График">
-                                {/*<div className="container-lg">*/}
-                                <div className="row">
-                                    <div className="col-xxl-6">
-                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
-                                    </div>
-                                    <div className="col-xxl-6 ">
-                                        <div className="row d-flex justify-content-center">
-                                            <EdgeChart edgeData={productionData}/>
-                                        </div>
-                                        <div className="row d-flex justify-content-center">
-                                            <ThicknessChart edgeData={productionData}/>
-                                        </div>
-                                    </div>
-                                    <div className="col-xxl">
-                                        <div className="row d-flex justify-content-center">
-                                            <DefectChart data={productionData}/>
-                                        </div>
-                                    </div>
+                                    <Container>
+                                        <Row>
+                                            <Col className="col-lg-6">
+                                                <GypsumBoardChart raw_data={gypsumBoardData}/>
+                                            </Col>
+                                            <div className="col-xxl-6 ">
+                                                <div className="row d-flex justify-content-center">
+                                                    <EdgeChart edgeData={productionData}/>
+                                                </div>
+                                                <div className="row d-flex justify-content-center">
+                                                    <ThicknessChart edgeData={productionData}/>
+                                                </div>
+                                            </div>
+                                            <div className="col-xxl">
+                                                <div className="row d-flex justify-content-center">
+                                                    <DefectChart data={productionData}/>
+                                                </div>
+                                            </div>
+                                        </Row>
+                                    </Container>
 
                                     {/*</div>*/}
                                     {/*</div>*/}
-                                </div>
-                                {/*</div>*/}
-                            </Tab>
-                            <Tab eventKey="opinion" title="В разработке" disabled={true}>
-                                В разработке...
-                            </Tab>
-                        </Tabs>
-                    </div>
-                </div>
-            </div>
+                                    {/*</div>*/}
+                                    {/*</div>*/}
+                                </Tab>
+                                <Tab eventKey="opinion" title="В разработке" disabled={true}>
+                                    В разработке...
+                                </Tab>
+                            </Tabs>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
         </div>
-        </div>
-    );
+);
 };
 
 export default GypsumBoardShow;

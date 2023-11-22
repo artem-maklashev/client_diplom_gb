@@ -1,5 +1,5 @@
 .tab-content {
-    background-color: #f0f0f0; /* Цвет фона для содержимого вкладок */
+    background-color: #e3e3e3; /* Цвет фона для содержимого вкладок */
     padding: 15px;
 }
 
@@ -9,10 +9,12 @@
 }
 
 .nav-tabs .nav-item .nav-link {
-    color: #333; /* Цвет текста неактивной вкладки */
+    color: #ffffff; /* Цвет текста неактивной вкладки */
+    border-color: #414141;
+    background-color: #616161;
 }
 
 .nav-tabs .nav-item .nav-link.disabled {
-    color: #b5b5b5; /* Цвет текста активной вкладки */
+    color: #aeaeae; /* Цвет текста активной вкладки */
 }
 
