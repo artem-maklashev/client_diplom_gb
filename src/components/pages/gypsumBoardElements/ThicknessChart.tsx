@@ -16,7 +16,7 @@ interface BoardProductionProps {
     edgeData: BoardProduction[];
 }
 
-const EdgeChart: React.FC<BoardProductionProps> = ({edgeData}) => {
+const ThicknessChart: React.FC<BoardProductionProps> = ({edgeData}) => {
     const data = edgeData.filter(
         (value) => value.gypsumBoardCategory.id === 2 || value.gypsumBoardCategory.id === 3 ||
             value.gypsumBoardCategory.id === 4);
@@ -30,14 +30,14 @@ const EdgeChart: React.FC<BoardProductionProps> = ({edgeData}) => {
     let data1: ChartData[] = [];
 
     data.forEach((value) => {
-        const existingData = data1.find((item) => item.name === value.gypsumBoard.edge.name);
+        const existingData = data1.find((item) => item.name === value.gypsumBoard.thickness.value);
 
         if (existingData) {
             // Если данные существуют, добавьте значение к существующему значению
             existingData.value += value.value;
         } else {
             // Если данных нет, создайте новый объект ChartData и добавьте его в массив
-            const newData = new ChartData(value.gypsumBoard.edge.name, value.value);
+            const newData = new ChartData(value.gypsumBoard.thickness.value, value.value);
             data1.push(newData);
         }
     });
@@ -46,30 +46,30 @@ const EdgeChart: React.FC<BoardProductionProps> = ({edgeData}) => {
     return (
         <div className="col-6 "  style={{ width: '100%', height: '50%'}} >
             {/*<ResponsiveContainer width="100%" height="100%">*/}
-                <PieChart width={500} height={400}>
-                    <Tooltip label="name>"/>
-                    <Legend name="name" verticalAlign="top"/>
-                    <Pie
-                        data={data1}
-                        dataKey="value"
-                        nameKey="name"
+            <PieChart width={500} height={400}>
+                <Tooltip label="name>"/>
+                <Legend name="name" verticalAlign="top"/>
+                <Pie
+                    data={data1}
+                    dataKey="value"
+                    nameKey="name"
 
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={75}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        label={({name, value}) => `${name} » ${value.toFixed(2)}`}
-                        animationDuration={500}
-                    >
-                        {data1.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
-                        ))}
-                    </Pie>
-                </PieChart>
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={75}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    label={({name, value}) => `${name} » ${value.toFixed(2)}`}
+                    animationDuration={500}
+                >
+                    {data1.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                    ))}
+                </Pie>
+            </PieChart>
             {/*</ResponsiveContainer>*/}
         </div>
     );
 };
 
-export default EdgeChart;
+export default ThicknessChart;

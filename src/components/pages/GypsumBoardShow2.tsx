@@ -7,6 +7,7 @@ import './MyStyle.css'
 import BoardProduction from "../../model/production/BoardProduction";
 import EdgeChart from "./gypsumBoardElements/EdgeChart";
 import DefectChart from "./gypsumBoardElements/DefectChart";
+import ThicknessChart from "./gypsumBoardElements/ThicknessChart";
 
 interface GypsumBoardShowProps {
 }
@@ -133,16 +134,15 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
     };
 
 
-
     return (
-        <div className="container">
-            <div>
-                <div className="row">
-                    <div className="col-md-6 mb-3 mx-auto">
-                        <div className="input-group">
-              <span className="input-group-text" id="basic-addon1">
-                Дата начала
-              </span>
+        <div className="row mt-5">
+            <div className="container mt-auto">
+            <div className="row mt-5">
+                <div className="col-md-3 mb-3 mx-auto">
+                    <div className="input-group">
+                          <span className="input-group-text" id="basic-addon1">
+                            Дата начала
+                          </span>
                             <input
                                 type="date"
                                 id="startDateInput"
@@ -150,26 +150,26 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
                                 onChange={handleDateChange}
                                 className="form-control"
                             />
-                        </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-6 mb-3 mx-auto">
-                            <div className="input-group">
-              <span className="input-group-text" id="basic-addon1">
-                Дата окончания
-              </span>
-                                <input
-                                    type="date"
-                                    id="endDateInput"
-                                    value={selectedEndDate}
-                                    onChange={handleDateChange}
-                                    className="form-control"
-                                />
-                            </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-3 mb-3 mx-auto">
+                        <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">
+                                    Дата окончания
+                                </span>
+                            <input
+                                type="date"
+                                id="endDateInput"
+                                value={selectedEndDate}
+                                onChange={handleDateChange}
+                                className="form-control"
+                            />
                         </div>
                     </div>
                 </div>
             </div>
+
             <div className='row'>
 
                 {errorText && <div className="error-message">{errorText}</div>}
@@ -180,34 +180,45 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
                 {/*</div>*/}
                 {/*<div className='col-6'>*/}
                 {/*    <GypsumBoardChart raw_data={gypsumBoardData} />*/}
-                <div className="container container-fluid">
-                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
-                        <Tab eventKey="table" title="Таблица">
-                            <GypsumBoardTable data={gypsumBoardData}/>
-                        </Tab>
-                        <Tab eventKey="bar" title="График">
-                            <div className="container-lg">
+                <div className="GypsumBoardShow">
+                    <div className="container container-xxl mt-5">
+                        <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
+                            <Tab eventKey="table" title="Таблица">
+                                <GypsumBoardTable data={gypsumBoardData}/>
+                            </Tab>
+                            <Tab eventKey="bar" title="График">
+                                {/*<div className="container-lg">*/}
                                 <div className="row">
-                                    <div className="col-6">
-                                        <GypsumBoardChart raw_data={gypsumBoardData} />
+                                    <div className="col-xxl-6">
+                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
                                     </div>
-                                    <div className="col-6">
-                                        <div className="row">
-                                            <EdgeChart edgeData={productionData} />
+                                    <div className="col-xxl-6 ">
+                                        <div className="row d-flex justify-content-center">
+                                            <EdgeChart edgeData={productionData}/>
                                         </div>
-                                        <div className="row">
-                                            <DefectChart data={productionData} />
+                                        <div className="row d-flex justify-content-center">
+                                            <ThicknessChart edgeData={productionData}/>
                                         </div>
                                     </div>
+                                    <div className="col-xxl">
+                                        <div className="row d-flex justify-content-center">
+                                            <DefectChart data={productionData}/>
+                                        </div>
+                                    </div>
+
+                                    {/*</div>*/}
+                                    {/*</div>*/}
                                 </div>
-                            </div>
-                        </Tab>
-                        <Tab eventKey="opinion" title="В разработке" disabled={true}>
-                            В разработке...
-                        </Tab>
-                    </Tabs>
+                                {/*</div>*/}
+                            </Tab>
+                            <Tab eventKey="opinion" title="В разработке" disabled={true}>
+                                В разработке...
+                            </Tab>
+                        </Tabs>
+                    </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };
