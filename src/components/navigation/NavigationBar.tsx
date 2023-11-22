@@ -1,35 +1,46 @@
+import React from "react";
+import {Button, Form, FormControl, Nav, Navbar, NavbarBrand, NavDropdown} from "react-bootstrap";
+import {Link, Route, BrowserRouter as Router, Routes} from "react-router-dom";
+import GypsumBoardShow2 from "../pages/GypsumBoardShow2";
+import MainPage from "../pages/MainPage";
+
 function NavigationBar() {
     return (
-        <div className="row">
-            <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+
+        <Router>
+            <Navbar expand="lg" className="bg-body-tertiary fixed-top">
                 <div className="container-fluid">
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <a className="navbar-brand" href="/">Декоратор</a>
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="/">Home</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/board">Гипсокартон</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-                            </li>
-                        </ul>
-                        <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search"
-                                   aria-label="Search"/>
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </div>
+                    <NavbarBrand href="/">Декоратор</NavbarBrand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link href="/">
+                                Home
+                            </Nav.Link>
+                            <NavDropdown title="Гипсокартон" id="board-dropdown">
+                                <NavDropdown.Item as={Link} to="/board">
+                                    Производство
+                                </NavDropdown.Item>
+                                <NavDropdown.Item href="#delays">Простои</NavDropdown.Item>
+                            </NavDropdown>
+                            <Nav.Link href="/" disabled={true}>
+                                Disabled
+                            </Nav.Link>
+                        </Nav>
+                        <Form className="d-inline-flex">
+                            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                            <Button variant="outline-success">Search</Button>
+                        </Form>
+                    </Navbar.Collapse>
                 </div>
-            </nav>
-        </div>
+            </Navbar>
+
+            <Routes>
+                <Route path="/board" element={<GypsumBoardShow2/>}/>
+                <Route path="/" element={<MainPage/>}/>
+            </Routes>
+        </Router>
+
     );
 }
 

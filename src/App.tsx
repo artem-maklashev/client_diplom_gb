@@ -15,8 +15,8 @@ function App() {
                 <div className='flex-grow-1'>
                     <Router>
                         <Routes>
-                            <Route path="/board" element={<GypsumBoardShow2/>}/>
-                            <Route path="/" element={<MainPage/>}/>
+                            {/*<Route path="/board" element={<GypsumBoardShow2/>}/>*/}
+                            {/*<Route path="/" element={<MainPage/>}/>*/}
                         </Routes>
                     </Router>
 
