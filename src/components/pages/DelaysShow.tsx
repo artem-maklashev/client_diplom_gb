@@ -1,88 +1,54 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
-import GypsumBoardTable from "./gypsumBoardElements/GypsumBoardTable";
-import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
+import React, {useCallback, useEffect, useState} from "react";
+import Delays from "../../model/delays/Delays";
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
-import './MyStyle.css'
-import BoardProduction from "../../model/production/BoardProduction";
-import EdgeChart from "./gypsumBoardElements/EdgeChart";
-import DefectChart from "./gypsumBoardElements/DefectChart";
-import ThicknessChart from "./gypsumBoardElements/ThicknessChart";
+import DelaysTable from "./delaysElements/DelaysTable";
 
-interface GypsumBoardShowProps {
+interface DelaysShowProps {
 }
 
-const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionProps) => {
-    const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
+
+
+const DelaysShow: React.FC<DelaysShowProps> = (props) => {
+    const [delaysData, setDelaysData] = useState<Delays[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
-    const [productionData, setProductionData] = useState<BoardProduction[]>([]);
 
-    const fetchGypsumBoardData = useCallback(async () => {
+
+    const fetchDelaysData = useCallback(async () => {
         try {
+
 
             const params = new URLSearchParams({
                 startDate: selectedStartDate,
                 endDate: selectedEndDate
+
             });
 
-            const response = await fetch(`http://localhost:8080/api/allboard?${params.toString()}`);
+            const response = await fetch(`http://localhost:8080/api/allboard/delays?${params.toString()}`);
 
             if (!response.ok) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
             }
 
-            const data: GypsumBoardInputData[] = await response.json();
+            const data: Delays[] = await response.json();
             setErrorText(null);
-            setGypsumBoardData(data);
+            setDelaysData(data);
         } catch (error: any) {
             console.error(`Произошла ошибка: ${error.message}`);
             setErrorText(error.message);
-            setGypsumBoardData([]);
-        }
-    }, [selectedStartDate, selectedEndDate]);
-    const fetchProductionData = useCallback(async () => {
-        try {
-
-            const params = new URLSearchParams({
-                startDate: selectedStartDate,
-                endDate: selectedEndDate
-            });
-
-            const response = await fetch(`http://localhost:8080/api/allboard/production?${params.toString()}`);
-
-            if (!response.ok) {
-                throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
-            }
-
-            const data: BoardProduction[] = await response.json();
-            setErrorText(null);
-            console.log(data[0].productionList.id);
-            setProductionData(data);
-            console.log("Получены данные по выпуску продукции " + data.length);
-        } catch (error: any) {
-            console.error(`Произошла ошибка: ${error.message}`);
-            setErrorText(error.message);
-            setProductionData([]);
+            setDelaysData([]);
         }
     }, [selectedStartDate, selectedEndDate]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            await fetchGypsumBoardData();
-        };
-
-        fetchData();
-    }, [selectedStartDate, selectedEndDate, fetchGypsumBoardData]);
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetchProductionData();
+            await fetchDelaysData();
         };
 
         fetchData();
-    }, [selectedStartDate, selectedEndDate, fetchProductionData]);
+    }, [selectedStartDate, selectedEndDate, fetchDelaysData]);
 
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,7 +147,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
                                 <Tab eventKey="table" title="Таблица">
                                     <Col className="d-flex justify-content-center">
                                         <div className="col-sm-10 ">
-                                            <GypsumBoardTable data={gypsumBoardData}/>
+                                            <DelaysTable data={delaysData}/>
                                         </div>
                                     </Col>
                                 </Tab>
@@ -189,22 +155,22 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
 
                                     <Container>
                                         <Row>
-                                            <Col className="col-lg-6">
-                                                <GypsumBoardChart raw_data={gypsumBoardData}/>
-                                            </Col>
-                                            <div className="col-xxl-6 ">
-                                                <div className="row d-flex justify-content-center">
-                                                    <EdgeChart edgeData={productionData}/>
-                                                </div>
-                                                <div className="row d-flex justify-content-center">
-                                                    <ThicknessChart edgeData={productionData}/>
-                                                </div>
-                                            </div>
-                                            <div className="col-xxl">
-                                                <div className="row d-flex justify-content-center">
-                                                    <DefectChart data={productionData}/>
-                                                </div>
-                                            </div>
+                                            {/*<Col className="col-lg-6">*/}
+                                            {/*    <DelaysChart raw_data={delaysData}/>*/}
+                                            {/*</Col>*/}
+                                            {/*<div className="col-xxl-6 ">*/}
+                                            {/*    <div className="row d-flex justify-content-center">*/}
+                                            {/*        <EdgeChart edgeData={productionData}/>*/}
+                                            {/*    </div>*/}
+                                            {/*    <div className="row d-flex justify-content-center">*/}
+                                            {/*        <ThicknessChart edgeData={productionData}/>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
+                                            {/*<div className="col-xxl">*/}
+                                            {/*    <div className="row d-flex justify-content-center">*/}
+                                            {/*        <DefectChart data={productionData}/>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
                                         </Row>
                                     </Container>
 
@@ -222,7 +188,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionP
                 </Row>
             </Container>
         </div>
-);
+    );
 };
 
-export default GypsumBoardShow;
+export default DelaysShow;

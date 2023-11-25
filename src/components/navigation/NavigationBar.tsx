@@ -3,6 +3,7 @@ import {Button, Form, FormControl, Nav, Navbar, NavbarBrand, NavDropdown} from "
 import {Link, Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import GypsumBoardShow2 from "../pages/GypsumBoardShow2";
 import MainPage from "../pages/MainPage";
+import DelaysShow from "../pages/DelaysShow";
 
 function NavigationBar() {
     return (
@@ -21,7 +22,7 @@ function NavigationBar() {
                                 <NavDropdown.Item as={Link} to="/board">
                                     Производство
                                 </NavDropdown.Item>
-                                <NavDropdown.Item href="#delays">Простои</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/boardDelays" >Простои</NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link href="/" disabled={true}>
                                 Disabled
@@ -38,6 +39,7 @@ function NavigationBar() {
             <Routes>
                 <Route path="/board" element={<GypsumBoardShow2/>}/>
                 <Route path="/" element={<MainPage/>}/>
+                <Route path="/boardDelays" element={<DelaysShow />}/>
             </Routes>
         </Router>
 
