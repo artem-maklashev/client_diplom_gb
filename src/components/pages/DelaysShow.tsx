@@ -8,7 +8,7 @@ interface DelaysShowProps {
 
 
 
-const DelaysShow: React.FC<DelaysShowProps> = (props) => {
+const DelaysShow: React.FC<DelaysShowProps> = () => {
     const [delaysData, setDelaysData] = useState<Delays[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today

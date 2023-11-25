@@ -12,7 +12,7 @@ import ThicknessChart from "./gypsumBoardElements/ThicknessChart";
 interface GypsumBoardShowProps {
 }
 
-const GypsumBoardShow: React.FC<GypsumBoardShowProps> = (props, BoardProductionProps) => {
+const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
     const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
