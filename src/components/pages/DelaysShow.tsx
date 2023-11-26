@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import Delays from "../../model/delays/Delays";
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import DelaysTable from "./delaysElements/DelaysTable";
+import DelaysChart from "./delaysElements/DelaysChart";
 
 interface DelaysShowProps {
 }
@@ -155,22 +156,7 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
 
                                     <Container>
                                         <Row>
-                                            {/*<Col className="col-lg-6">*/}
-                                            {/*    <DelaysChart raw_data={delaysData}/>*/}
-                                            {/*</Col>*/}
-                                            {/*<div className="col-xxl-6 ">*/}
-                                            {/*    <div className="row d-flex justify-content-center">*/}
-                                            {/*        <EdgeChart edgeData={productionData}/>*/}
-                                            {/*    </div>*/}
-                                            {/*    <div className="row d-flex justify-content-center">*/}
-                                            {/*        <ThicknessChart edgeData={productionData}/>*/}
-                                            {/*    </div>*/}
-                                            {/*</div>*/}
-                                            {/*<div className="col-xxl">*/}
-                                            {/*    <div className="row d-flex justify-content-center">*/}
-                                            {/*        <DefectChart data={productionData}/>*/}
-                                            {/*    </div>*/}
-                                            {/*</div>*/}
+                                            <DelaysChart delays_data={delaysData} />
                                         </Row>
                                     </Container>
 

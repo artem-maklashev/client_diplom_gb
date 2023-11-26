@@ -1,5 +1,7 @@
-import React from "react";
+
 import Delays from "../../../model/delays/Delays";
+
+
 
 
 
@@ -46,6 +48,7 @@ class DelayDataPrepare {
             // Обновление суммарного времени для данного типа простоя
             delaysSummary[delayType] += deltaTime;
         });
+        Object.values(unitData).forEach((item) => item.sort((a,b) => a.delta > b.delta ? -1 : 1));
         return { delaysSummary, unitData };
     }   
     
