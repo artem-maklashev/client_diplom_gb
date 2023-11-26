@@ -1,4 +1,5 @@
 import Delays from "../../../model/delays/Delays";
+import DelayDataPrepare from "./DalayDataPrepare";
 
 interface DelaysTableProps {
     data: Delays[];
@@ -15,42 +16,50 @@ const DelaysTable: React.FC<DelaysTableProps> = ({ data }) => {
         (item) => item.unitPart.unit.productionArea.division.id === 1
     );
 
-    const delaysSummary: { [key: string]: number } = {};
-    const unitData: { [key: string]: Delays[] } = {};
+    const preparedData = new DelayDataPrepare(filteredData).getSummary();
+    const delaysSummary = preparedData.delaysSummary;
+    const unitData = preparedData.unitData
 
-    // Группируем данные по типу простоя
-    filteredData.forEach((item) => {
-        const delayType = item.delayType.name;
-        const unitName = item.unitPart.unit.name;
-        const deltaTime =
-            (new Date(item.endTime).getTime() - new Date(item.startTime).getTime()) /
-            (60 * 1000);
 
-        if (!unitData[delayType]) {
-            unitData[delayType] = [];
-        }
 
-        // Ищем элемент с таким же unit в текущем типе простоя
-        const existingItem = unitData[delayType].find(
-            (existing) => existing.unitPart.unit.name === unitName
-        );
 
-        if (existingItem) {
-            // Если найден, суммируем длительность
-            existingItem.delta += deltaTime;
-        } else {
-            // Если не найден, добавляем новый элемент
-            unitData[delayType].push({ ...item, delta: deltaTime });
-        }
 
-        // Инициализация суммарного времени для данного типа простоя
-        if (!delaysSummary[delayType]) {
-            delaysSummary[delayType] = 0;
-        }
+    // const delaysSummary: { [key: string]: number } = {};
+    // const unitData: { [key: string]: Delays[] } = {};
 
-        // Обновление суммарного времени для данного типа простоя
-        delaysSummary[delayType] += deltaTime;
-    });
+    // // Группируем данные по типу простоя
+    // filteredData.forEach((item) => {
+    //     const delayType = item.delayType.name;
+    //     const unitName = item.unitPart.unit.name;
+    //     const deltaTime =
+    //         (new Date(item.endTime).getTime() - new Date(item.startTime).getTime()) /
+    //         (60 * 1000);
+
+    //     if (!unitData[delayType]) {
+    //         unitData[delayType] = [];
+    //     }
+
+    //     // Ищем элемент с таким же unit в текущем типе простоя
+    //     const existingItem = unitData[delayType].find(
+    //         (existing) => existing.unitPart.unit.name === unitName
+    //     );
+
+    //     if (existingItem) {
+    //         // Если найден, суммируем длительность
+    //         existingItem.delta += deltaTime;
+    //     } else {
+    //         // Если не найден, добавляем новый элемент
+    //         unitData[delayType].push({ ...item, delta: deltaTime });
+    //     }
+
+    //     // Инициализация суммарного времени для данного типа простоя
+    //     if (!delaysSummary[delayType]) {
+    //         delaysSummary[delayType] = 0;
+    //     }
+
+    //     // Обновление суммарного времени для данного типа простоя
+    //     delaysSummary[delayType] += deltaTime;
+    // });
 
     const tables = Object.entries(unitData).map(
         ([delayType, tableData], tableIndex) => (
