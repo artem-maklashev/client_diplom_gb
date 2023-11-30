@@ -3,7 +3,7 @@ import Delays from "../../../model/delays/Delays";
 import DalayDataPrepare from "./DalayDataPrepare";
 import {Bar, BarChart, CartesianGrid, LabelList, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {Row} from "react-bootstrap";
-import UnitPart from "../../../model/delays/UnitPart";
+
 
 interface DelaysChartProps {
     delays_data: Delays[];
