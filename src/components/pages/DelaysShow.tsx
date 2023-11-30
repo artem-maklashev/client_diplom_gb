@@ -67,6 +67,7 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
+        alert("Получены данные по простоям в рамере: " + enteredDate.length);
     };
 
     // Function to get the current date in YYYY-MM-DD format (required by input type="date")

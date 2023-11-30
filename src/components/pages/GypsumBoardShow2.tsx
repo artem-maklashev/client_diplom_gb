@@ -44,7 +44,6 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
     }, [selectedStartDate, selectedEndDate]);
     const fetchProductionData = useCallback(async () => {
         try {
-
             const params = new URLSearchParams({
                 startDate: selectedStartDate,
                 endDate: selectedEndDate
@@ -135,7 +134,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
 
 
     return (
-        <div className="row mt-5" style={{ backgroundColor: '#b5b5b5' }}>
+        <div className="row mt-5 justify-content-center" style={{ backgroundColor: '#b5b5b5' }} >
             <Container className="container mt-auto">
                 <div className="row mt-5">
                     <div className="col-md-3 mb-3 mx-auto">

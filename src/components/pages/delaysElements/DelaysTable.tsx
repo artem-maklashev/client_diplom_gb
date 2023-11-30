@@ -8,8 +8,6 @@ interface DelaysTableProps {
 const DelaysTable: React.FC<DelaysTableProps> = ({ data }) => {
     if (data.length === 0) {
         return <div>Данных нет</div>;
-    } else {
-        console.log("Получены данные в размере " + data.length);
     }
 
     const filteredData = data.filter(
