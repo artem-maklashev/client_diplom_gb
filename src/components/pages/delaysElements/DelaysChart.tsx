@@ -12,50 +12,58 @@ interface DelaysChartProps {
 const DelaysChart: React.FC<DelaysChartProps> = ({delays_data}) => {
     const preparedData = new DalayDataPrepare(delays_data).getSummary();
     const summaryDelays = preparedData.delaysSummary;
-    const summary: [delayType: string, delay: number][] = Object.entries(summaryDelays);
+    const summary = Object.entries(summaryDelays);
     const unitDelays = (preparedData.unitData);
+    const total = summary.reduce((sum, current) => sum + current[1],0);
     console.log('Summary', summary);
     console.log('UnitData', unitDelays);
 
 
-    //пробую вставить графики
     const charts = Object.entries(unitDelays).map(
-        ([delayType, chartData], chartIndex) => (
-            <div key={`table-${chartIndex}`}>
-                <h3>{delayType}</h3>
-                <Row id={`delaysChart-${chartIndex}`}>
-                    <div className="col" style={{ width: "100%", height: "300px" }}>
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart
-                                data={chartData}
-                                layout="vertical"
-                                margin={{ top: 5, right: 100, bottom: 20, left: 10 }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis type="number" dataKey={"delta"} /> {/* Use entry[1] for the delay value */}
-                                <YAxis
-                                    type="category"
-                                    dataKey={"unitPart.unit.name"} // Extract category name from unitPart.unit.name
-                                    tick={{ stroke: "black", strokeWidth: 0.5, fontSize: 12 }}
-                                    width={200}
-                                />
-                                <Tooltip />
-                                {/* ... rest of your Bar components */}
-                                <Bar dataKey={"delta"} fill="#3498db" animationDuration={500}>
-                                    <LabelList position="right" />
-                                </Bar>
-                                {/* ... rest of your Bar components */}
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
+        ([delayType, chartData], chartIndex) => {
+            const totalDelta = chartData.reduce((sum, data) => sum + data.delta, 0);
+
+            return (
+                <Row>
+
+                <div key={`chart-${chartIndex}`}>
+                    <h4>{delayType}: {totalDelta} минут</h4>
+                    <Row id={`delaysChart-${chartIndex}`}>
+                        <div className="col" style={{width: "100%", height: "300px"}}>
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart
+                                    data={chartData}
+                                    layout="vertical"
+                                    margin={{top: 5, right: 100, bottom: 20, left: 10}}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3"/>
+                                    <XAxis type="number" dataKey={"delta"}/> {/* Use entry[1] for the delay value */}
+                                    <YAxis
+                                        type="category"
+                                        dataKey={"unitPart.unit.name"} // Extract category name from unitPart.unit.name
+                                        tick={{stroke: "black", strokeWidth: 0.5, fontSize: 12}}
+                                        width={200}
+                                    />
+                                    <Tooltip/>
+                                    {/* ... rest of your Bar components */}
+                                    <Bar dataKey={"delta"} fill="#3498db" animationDuration={500}>
+                                        <LabelList position="right"/>
+                                    </Bar>
+                                    {/* ... rest of your Bar components */}
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </Row>
+                </div>
                 </Row>
-            </div>
-        )
+            );
+        }
     );
 
 
     return (
         <Row>
+            <h3>Суммарное количество простоев: {total} минут</h3>
             <div className="col" style={{width: '100%', height: '300px'}}>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
@@ -79,36 +87,7 @@ const DelaysChart: React.FC<DelaysChartProps> = ({delays_data}) => {
                         {/* ... rest of your Bar components */}
                     </BarChart>
                 </ResponsiveContainer>
-                {/*<div>*/}
-                    {/*{Object.entries(unitDelays).map(*/}
-                    {/*    ([delayType, tableData], tableIndex) => (*/}
-                    {/*        <Row>*/}
-                    {/*            <ResponsiveContainer width="100%" height="100%">*/}
-                    {/*                <BarChart*/}
-                    {/*                    data={tableData}*/}
-                    {/*                    layout="vertical"*/}
-                    {/*                    margin={{top: 5, right: 100, bottom: 20, left: 10}}*/}
-                    {/*                >*/}
-                    {/*                    <CartesianGrid strokeDasharray="3 3"/>*/}
-                    {/*                    <XAxis type="number"*/}
-                    {/*                           dataKey={"delta"}/> /!* Use entry[1] for the delay value *!/*/}
-                    {/*                    <YAxis*/}
-                    {/*                        type="category"*/}
-                    {/*                        dataKey={"unitPart.name"} // Use entry[0] for the delay type*/}
-                    {/*                        tick={{stroke: 'black', strokeWidth: 0.5, fontSize: 12}}*/}
-                    {/*                        width={200}*/}
-                    {/*                    />*/}
-                    {/*                    <Tooltip/>*/}
-                    {/*                    /!*<Legend verticalAlign="top" height={36} />*!/*/}
-                    {/*                    <Bar dataKey={entry => entry[1]} fill="#3498db" animationDuration={500}>*/}
-                    {/*                        <LabelList position="right"/>*/}
-                    {/*                    </Bar>*/}
-                    {/*                    /!* ... rest of your Bar components *!/*/}
-                    {/*                </BarChart>*/}
-                    {/*            </ResponsiveContainer>*/}
-                    {/*        </Row>*/}
-                    {/*    ))}*/}
-                {/*</div>*/}
+
             </div>
         <div>{charts}</div>
         </Row>
