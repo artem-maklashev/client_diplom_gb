@@ -52,6 +52,6 @@ class DelayDataPrepare {
         return { delaysSummary, unitData };
     }   
     
-};
+}
 
 export default DelayDataPrepare;

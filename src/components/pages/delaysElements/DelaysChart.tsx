@@ -35,7 +35,7 @@ const DelaysChart: React.FC<DelaysChartProps> = ({delays_data}) => {
                                     data={chartData}
                                     layout="vertical"
                                     margin={{top: 5, right: 100, bottom: 20, left: 10}}
-                                >
+                                >cd
                                     <CartesianGrid strokeDasharray="3 3"/>
                                     <XAxis type="number" dataKey={"delta"}/> {/* Use entry[1] for the delay value */}
                                     <YAxis
