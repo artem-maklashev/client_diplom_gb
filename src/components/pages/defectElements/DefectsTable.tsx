@@ -1,4 +1,5 @@
 import BoardDefectsLog from "../../../model/defects/BoardDefectsLog";
+import { useFetchProductionData } from "../commonElements/GetProductionData";
 import DefectsDataPrepare from "./DefectsDataPrepare";
 import {Table} from "react-bootstrap";
 
@@ -14,7 +15,7 @@ const DefectsTable: React.FC<DefectsTableProps> = ({data}) => {
 
     const preparedDefects = new DefectsDataPrepare(data);
     const summaryDefects = preparedDefects.getSummary();
-
+    
 
     const mainTable = (
         <Table striped bordered hover variant="light">

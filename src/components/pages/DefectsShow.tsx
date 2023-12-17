@@ -1,11 +1,8 @@
 import React, {useCallback, useEffect, useState} from "react";
 import BoardDefectsLog from "../../model/defects/BoardDefectsLog";
-import Delays from "../../model/delays/Delays";
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
-import DelaysTable from "./delaysElements/DelaysTable";
-import DelaysChart from "./delaysElements/DelaysChart";
-import Defects from "../../model/defects/Defects";
 import DefectsTable from "./defectElements/DefectsTable";
+import { useFetchProductionData } from "./commonElements/GetProductionData";
 
 interface DefectsShowProps {
 }
@@ -15,6 +12,7 @@ const DefectsShow : React.FC<DefectsShowProps> = () => {
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
+    const { productionData, } = useFetchProductionData(selectedStartDate, selectedEndDate);
     const fetchDefectsData = useCallback(async () => {
         try {
 
@@ -66,7 +64,6 @@ const DefectsShow : React.FC<DefectsShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
-        alert("Получены данные по простоям в рамере: " + enteredDate.length);
     };
 
     // Function to get the current date in YYYY-MM-DD format (required by input type="date")
