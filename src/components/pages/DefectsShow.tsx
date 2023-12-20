@@ -2,17 +2,18 @@ import React, {useCallback, useEffect, useState} from "react";
 import BoardDefectsLog from "../../model/defects/BoardDefectsLog";
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import DefectsTable from "./defectElements/DefectsTable";
-import { useFetchProductionData } from "./commonElements/GetProductionData";
+import {useFetchProductionData} from "./commonElements/GetProductionData";
+import ShiftsDefect from "./defectElements/ShiftsDefect";
 
 interface DefectsShowProps {
 }
 
-const DefectsShow : React.FC<DefectsShowProps> = () => {
+const DefectsShow: React.FC<DefectsShowProps> = () => {
     const [defectsData, setDefectsData] = useState<BoardDefectsLog[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
-    const { productionData, } = useFetchProductionData(selectedStartDate, selectedEndDate);
+    const {productionData,} = useFetchProductionData(selectedStartDate, selectedEndDate);
     const fetchDefectsData = useCallback(async () => {
         try {
 
@@ -98,8 +99,11 @@ const DefectsShow : React.FC<DefectsShowProps> = () => {
     };
 
 
+
+        console.log("Передаю данные по производству в размере " + productionData.length)
+
     return (
-        <div className="row mt-5" style={{ backgroundColor: '#b5b5b5' }}>
+        <div className="row mt-5" style={{backgroundColor: '#b5b5b5'}}>
             <Container className="container mt-auto">
                 <div className="row mt-5">
                     <div className="col-md-3 mb-3 mx-auto">
@@ -139,15 +143,18 @@ const DefectsShow : React.FC<DefectsShowProps> = () => {
             {errorText && <div className="error-message">{errorText}</div>}
             <Container>
                 <Row xs={1} md={1} lg={1}>
-                    <Col className="d-flex justify-content-center">
+                    <Row className="d-flex justify-content-center">
                         <div className="col-lg-11 ">
-                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
+                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                                 <Tab eventKey="table" title="Таблица">
-                                    <Col className="d-flex justify-content-center">
-                                        <div className="col-sm-10 ">
+                                    <Row className="justify-content-center">
+                                        <Col className="col-lg-8">
                                             <DefectsTable data={defectsData}/>
-                                        </div>
-                                    </Col>
+                                        </Col>
+                                        <Col className="col-lg-2 ">
+                                            <ShiftsDefect data={productionData}/>
+                                        </Col>
+                                    </Row>
                                 </Tab>
                                 <Tab eventKey="bar" title="График">
 
@@ -167,7 +174,7 @@ const DefectsShow : React.FC<DefectsShowProps> = () => {
                                 </Tab>
                             </Tabs>
                         </div>
-                    </Col>
+                    </Row>
                 </Row>
             </Container>
         </div>

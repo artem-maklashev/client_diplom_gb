@@ -7,5 +7,8 @@ class Shift {
         this.id = id;
         this.name = name;
     }
+
+
+
 }
 export default Shift;

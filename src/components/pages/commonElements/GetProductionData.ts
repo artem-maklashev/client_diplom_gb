@@ -37,7 +37,6 @@ export const useFetchProductionData = (
         const fetchData = async () => {
             await fetchProductionData();
         };
-
         fetchData();
     }, [selectedStartDate, selectedEndDate, fetchProductionData]);
 

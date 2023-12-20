@@ -7,16 +7,18 @@ class ProductionList {
     productionStart: Date;
     productionEnd: Date;
     productionDate: Date;
-    shiftId: Shift;
+    shift: Shift;
     pTypeId: ProductTypes;
 
-    constructor(id: number, pStart: Date, pEnd: Date, pDate: Date, shiftID: Shift,pTypeId: ProductTypes ) {
+    constructor(id: number, pStart: Date, pEnd: Date, pDate: Date, shift: Shift,pTypeId: ProductTypes ) {
         this.id = id;
         this.productionStart = pStart;
         this.productionEnd = pEnd;
         this.productionDate = pDate;
-        this.shiftId = shiftID;
+        this.shift = shift;
         this.pTypeId = pTypeId;
     }
+
+
 }
 export default ProductionList;
