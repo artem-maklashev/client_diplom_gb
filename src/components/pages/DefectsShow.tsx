@@ -148,10 +148,10 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
                             <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                                 <Tab eventKey="table" title="Таблица">
                                     <Row className="justify-content-center">
-                                        <Col className="col-lg-8">
+                                        <Col className="col-lg-7">
                                             <DefectsTable data={defectsData}/>
                                         </Col>
-                                        <Col className="col-lg-2 ">
+                                        <Col className="col-lg-3 ">
                                             <ShiftsDefect data={productionData}/>
                                         </Col>
                                     </Row>
