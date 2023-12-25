@@ -2,7 +2,6 @@ import BoardDefectsLog from "../../../model/defects/BoardDefectsLog";
 import BoardProduction from "../../../model/production/BoardProduction";
 import React, {FC} from "react";
 import DefectsDataPrepare from "./DefectsDataPrepare";
-import {ChartData} from "chart.js";
 import {Col, Row} from "react-bootstrap";
 import {
     Area,
@@ -16,6 +15,7 @@ import {
     XAxis,
     YAxis
 } from "recharts";
+import DefectChartData from "../gypsumBoardElements/DefectChartData";
 
 
 interface ChartDefectsProps {
@@ -46,46 +46,50 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
     const toChartData = productionChartData().sort((a, b) => b[1] - a[1]);
 
     let chartData = preparedData.getDefectsByDate();
-    chartData.sort((a, b) => {
-        const pDate1 = new Date(a.pDate);
-        const pDate2 = new Date(b.pDate);
-        return pDate1.getDate() - pDate2.getDate();
-    });
+    
     chartData = chartData.map(value => ({
         ...value,
         defectsPresent: Number(((value.totalValue - value.value) * 100 / value.totalValue).toFixed(2))
-    }));
-    chartData.forEach(value => {
-        const dateValue = new Date(value.pDate); // Assuming pDate is the date property in your data
+    })).sort((a, b) => {
+        const pDate1 = new Date(a.pDate);
+        const pDate2 = new Date(b.pDate);
+        return pDate1.getTime()-pDate2.getTime();
+    });
+
+    if (chartData && chartData.length > 0) {
+        const firstDate = chartData[0].pDate;
+        console.log("первый день графика pDate " + firstDate);
+        console.log("последний день " + chartData[chartData.length - 1].pDate);
+    } else {
+        console.error('chartData is empty or undefined');
+    }
+    
+    
+    const tempArray: DefectChartData[] = [];
+
+    chartData.forEach((value) => {
+        const dateValue = new Date(value.pDate);
         if (isNaN(dateValue.getTime())) {
             throw new Error('Invalid date object');
         }
         const day = dateValue.getDate().toString().padStart(2, '0');
-        value.pDay = `${day}`;
+        tempArray.push({ ...value, pDay: day });
     });
+    for (let i = 0; i < tempArray.length; i++) {
+        chartData[i]=tempArray[i];
+    }
+    // console.log("---->"+chartData[0].pDay);
 
     const COLORS = ['#0088FE', '#00C49F', '#282cff', '#38054a',
         '#720779', "#e228ff"];
-    interface CustomTooltipProps {
-        active?: boolean;
-        payload?: { value: number }[]; // Замените на структуру данных, возвращаемую вашей библиотекой графиков
-        label?: string;
+    
+    if (chartData && chartData.length > 0) {
+        const firstDate = chartData[0].pDay;
+        console.log("первый день графика " + firstDate);
+    } else {
+        console.error('chartData is empty or undefined');
     }
-
-    const CustomTooltip: FC<CustomTooltipProps> = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="custom-tooltip">
-                    <p className="label">{`${label} : ${payload[0].value}`}</p>
-                    <p className="intro">{label}</p>
-                    <p className="desc">Anything you want can be displayed here.</p>
-                </div>
-            );
-        }
-
-        return null;
-    };
-
+    
     return <Col>
         <Row>
             <h3 className="text-center">Процент брака по дням</h3>
@@ -100,7 +104,7 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                                 <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
                             </linearGradient>
                         </defs>
-                        <XAxis dataKey="pDay"/>
+                        <XAxis dataKey="pDay" />
                         <YAxis dataKey="defectsPresent" label="%"/>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <Tooltip/>

@@ -81,26 +81,28 @@ class DefectsDataPrepare {
     getDefectsByDate() {
         const defectsByDate: DefectChartData[] = [];
         this.productionData.forEach(production => {
-            const existingData = defectsByDate.find((item) => {
-                return item.pDate === production.productionList.productionDate;
-            });
-            if (existingData) {
-                // Если данные существуют, добавьте значение к существующему значению
-                if (production.gypsumBoardCategory.id === 2 || production.gypsumBoardCategory.id === 3 || production.gypsumBoardCategory.id === 4) {
-                    existingData.value += production.value;
+            if (production.gypsumBoardCategory.id < 5) {
+                const existingData = defectsByDate.find((item) => {
+                    return item.pDate === production.productionList.productionDate;
+                });
+            
+                if (existingData) {
+                    // Если данные существуют, добавьте значение к существующему значению
+                    if (production.gypsumBoardCategory.id > 1 && production.gypsumBoardCategory.id < 5) {
+                        existingData.value += production.value;
+                    } else
+                        existingData.totalValue += production.value;
                 } else {
-                    existingData.totalValue += production.value;
-                }
-            } else {
                 // Если данных нет, создайте новый объект ChartData и добавьте его в массив
                 let newData: DefectChartData;
-                if (production.gypsumBoardCategory.id === 2 || production.gypsumBoardCategory.id === 3) {
+                if (production.gypsumBoardCategory.id === 2 || production.gypsumBoardCategory.id === 3 || production.gypsumBoardCategory.id === 4) {
                     newData = new DefectChartData(production.productionList.productionDate, production.value, 0, 0);
                 } else {
                     newData = new DefectChartData(production.productionList.productionDate, 0, production.value, 0);
                 }
                 defectsByDate.push(newData);
-            }
+            }            
+        }
         });
         return defectsByDate;
     }
