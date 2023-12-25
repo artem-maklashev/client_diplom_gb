@@ -5,6 +5,7 @@ import NavigationBar from './components/navigation/NavigationBar';
 // import GypsumBoardShow from './components/pages/GypsumBoardShow';
 import MainPage from './components/pages/MainPage';
 import GypsumBoardShow2 from "./components/pages/GypsumBoardShow2";
+import Footer from './components/navigation/Footer';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
 
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
