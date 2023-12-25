@@ -67,7 +67,7 @@ const DelaysTable: React.FC<DelaysTableProps> = ({ data }) => {
                     className="table table-striped table-bordered table-hover table-auto table-light"
                     id={`gypsumBoardTable-${tableIndex}`}
                 >
-                    <thead className="table-dark">
+                    <thead className="table-dark text-center">
                     <tr>
                         <th>Тип простоя</th>
                         <th>Участок</th>
@@ -83,14 +83,14 @@ const DelaysTable: React.FC<DelaysTableProps> = ({ data }) => {
                             <td>{item.unitPart.unit.productionArea.name}</td>
                             <td>{item.unitPart.unit.name}</td>
                             <td>{item.unitPart.name}</td>
-                            <td>{item.delta}</td>
+                            <td className="text-center">{item.delta}</td>
                         </tr>
                     ))}
                     {/* Добавляем промежуточные итоги для каждой таблицы */}
-                    <tr key={`total-${tableIndex}`}>
+                    <tr key={`total-${tableIndex}`} className="table-success">
                         <td>{delayType}</td>
-                        <td colSpan={3}>Итого</td>
-                        <td>{delaysSummary[delayType]}</td>
+                        <td colSpan={3} className="text-end"><strong>Итого</strong></td>
+                        <td className="text-center"><strong>{delaysSummary[delayType]}</strong></td>
                     </tr>
                     </tbody>
                 </table>

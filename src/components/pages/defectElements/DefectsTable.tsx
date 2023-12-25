@@ -1,20 +1,21 @@
 import BoardDefectsLog from "../../../model/defects/BoardDefectsLog";
-import {useFetchProductionData} from "../commonElements/GetProductionData";
 import DefectsDataPrepare from "./DefectsDataPrepare";
 import {Col, Table} from "react-bootstrap";
 import React from "react";
+import BoardProduction from "../../../model/production/BoardProduction";
 
 
 interface DefectsTableProps {
-    data: BoardDefectsLog[];
+    defectsLog: BoardDefectsLog[];
+    data: BoardProduction[];
 }
 
-const DefectsTable: React.FC<DefectsTableProps> = ({data}) => {
+const DefectsTable: React.FC<DefectsTableProps> = ({defectsLog, data}) => {
     if (data.length === 0) {
         return <div>Данных нет</div>;
     }
 
-    const preparedDefects = new DefectsDataPrepare(data);
+    const preparedDefects = new DefectsDataPrepare(defectsLog, data);
     const summaryDefects = preparedDefects.getSummary();
 
 
@@ -46,7 +47,7 @@ const DefectsTable: React.FC<DefectsTableProps> = ({data}) => {
                 <tr>
                     <td>Итого:</td>
                     <td colSpan={2} className="text-center">
-                        <strong>{Object.values(summaryDefects).reduce((acc, value) => acc + value, 0).toFixed(2)}</strong>
+                        <strong>{Object.values(summaryDefects).reduce((acc, value) => acc + value, 0).toFixed(2)} м²</strong>
                     </td>
                 </tr>
                 </tbody>

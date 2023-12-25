@@ -1,25 +1,26 @@
 import BoardProduction from "../../../model/production/BoardProduction";
 import {Tooltip, AreaChart, YAxis, CartesianGrid, XAxis, Area, Label, ResponsiveContainer} from "recharts";
 import React from "react";
+import DefectChartData from "./DefectChartData";
 
 // Класс для представления данных
-class ChartData {
-    pDate: Date;
-    value: number;
-    totalValue: number;
-    defectsPresent: number;
-    pDay: string;
-
-
-    constructor(pDate: Date, value: number, totalValue: number, defectsPercent: number) {
-        this.pDate = pDate;
-        this.value = value;
-        this.totalValue = totalValue;
-        this.defectsPresent = defectsPercent;
-        this.pDay = "";
-    }
-
-}
+// class ChartData {
+//     pDate: Date;
+//     value: number;
+//     totalValue: number;
+//     defectsPresent: number;
+//     pDay: string;
+//
+//
+//     constructor(pDate: Date, value: number, totalValue: number, defectsPercent: number) {
+//         this.pDate = pDate;
+//         this.value = value;
+//         this.totalValue = totalValue;
+//         this.defectsPresent = defectsPercent;
+//         this.pDay = "";
+//     }
+//
+// }
 
 interface BoardProductionProps {
     data: BoardProduction[];
@@ -36,7 +37,7 @@ const DefectChart: React.FC<BoardProductionProps> = ({data}) => {
         console.log("Преобразованные данные " + defectData.length);
 
 
-        let data1: ChartData[] = [];
+        let data1: DefectChartData[] = [];
 
         defectData.forEach((production) => {
 
@@ -52,11 +53,11 @@ const DefectChart: React.FC<BoardProductionProps> = ({data}) => {
                     }
                 } else {
                     // Если данных нет, создайте новый объект ChartData и добавьте его в массив
-                    let newData: ChartData;
+                    let newData: DefectChartData;
                     if (production.gypsumBoardCategory.id === 2 || production.gypsumBoardCategory.id === 3) {
-                        newData = new ChartData(production.productionList.productionDate, production.value, 0, 0);
+                        newData = new DefectChartData(production.productionList.productionDate, production.value, 0, 0);
                     } else {
-                        newData = new ChartData(production.productionList.productionDate, 0, production.value, 0);
+                        newData = new DefectChartData(production.productionList.productionDate, 0, production.value, 0);
                     }
                     data1.push(newData);
                 }

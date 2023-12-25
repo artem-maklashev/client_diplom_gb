@@ -4,6 +4,7 @@ import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import DefectsTable from "./defectElements/DefectsTable";
 import {useFetchProductionData} from "./commonElements/GetProductionData";
 import ShiftsDefect from "./defectElements/ShiftsDefect";
+import ChartDefects from "./defectElements/ChartDefects";
 
 interface DefectsShowProps {
 }
@@ -99,8 +100,7 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
     };
 
 
-
-        console.log("Передаю данные по производству в размере " + productionData.length)
+    console.log("Передаю данные по производству в размере " + productionData.length)
 
     return (
         <div className="row mt-5" style={{backgroundColor: '#b5b5b5'}}>
@@ -148,26 +148,18 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
                             <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                                 <Tab eventKey="table" title="Таблица">
                                     <Row className="justify-content-center">
-                                        <Col className="col-lg-7">
-                                            <DefectsTable data={defectsData}/>
+                                        <Col className="col-lg-8">
+                                            <DefectsTable defectsLog={defectsData} data={productionData}/>
                                         </Col>
                                         <Col className="col-lg-3 ">
-                                            <ShiftsDefect data={productionData}/>
+                                            <ShiftsDefect data={productionData} defectsLog={defectsData}/>
                                         </Col>
                                     </Row>
                                 </Tab>
                                 <Tab eventKey="bar" title="График">
-
-                                    {/*<Container>*/}
-                                    {/*    <Row>*/}
-                                    {/*        <DefectsChart delays_data={defectsData} />*/}
-                                    {/*    </Row>*/}
-                                    {/*</Container>*/}
-
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*</div>*/}
+                                    <Row className="justify-content-center">
+                                        <ChartDefects defectsLog={defectsData} data={productionData} />
+                                    </Row>
                                 </Tab>
                                 <Tab eventKey="opinion" title="В разработке" disabled={true}>
                                     В разработке...
