@@ -18,15 +18,15 @@ interface GypsumBoardTableProps {
 
 const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({raw_data}) => {
     const data = raw_data.sort((a, b) => (a.factValue > b.factValue ? -1 : 1));
-
+    const filteredData = data.filter(item => item.factValue >= 0);
     return (
 
-        <div className="col-6 " style={{width: '100%', height: '800px'}}>
+        <div style={{width: 'auto', height: '800px'}}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                    data={data}
+                    data={filteredData}
                     layout="vertical"
-                    margin={{top: 5, right: 100, bottom: 20, left: 10}}
+                    margin={{top: 5, right: 50, bottom: 20, left: 10}}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis type="number" dataKey="factValue" hide/>

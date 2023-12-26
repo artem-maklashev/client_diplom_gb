@@ -24,7 +24,7 @@ const DefectsTable: React.FC<DefectsTableProps> = ({defectsLog, data}) => {
             <Table striped bordered hover variant="light">
                 <thead className="table-dark ">
                 <tr>
-                    <th className="text-center">Тип брака</th>
+                    <th className="text-center">Виды брака категории А</th>
                     <th colSpan={2} className="text-center">Количество</th>
                 </tr>
                 </thead>

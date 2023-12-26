@@ -1,5 +1,6 @@
+import React from 'react';
+import { PieChart, Pie, Tooltip, Cell, Legend, ResponsiveContainer } from 'recharts';
 import BoardProduction from "../../../model/production/BoardProduction";
-import {Pie, PieChart, Cell, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
 // Класс для представления данных
 class ChartData {
@@ -16,16 +17,18 @@ interface BoardProductionProps {
     edgeData: BoardProduction[];
 }
 
-const EdgeChart: React.FC<BoardProductionProps> = ({edgeData}) => {
+const EdgeChart: React.FC<BoardProductionProps> = ({ edgeData }) => {
     const data = edgeData.filter(
-        (value) => value.gypsumBoardCategory.id === 2 || value.gypsumBoardCategory.id === 3 ||
-            value.gypsumBoardCategory.id === 4);
+        (value) =>
+            value.gypsumBoardCategory.id === 2 ||
+            value.gypsumBoardCategory.id === 3 ||
+            value.gypsumBoardCategory.id === 4
+    );
     if (data.length === 0) {
         return <div>Данных нет</div>;
     } else {
-        console.log("Получены данные в размере " + data.length);
+        console.log('Получены данные в размере ' + data.length);
     }
-
 
     let data1: ChartData[] = [];
 
@@ -41,33 +44,40 @@ const EdgeChart: React.FC<BoardProductionProps> = ({edgeData}) => {
             data1.push(newData);
         }
     });
-    //цвета секторов диаграммы
+
+    // Цвета секторов диаграммы
     const COLORS = ['#0088FE', '#00C49F', '#282cff', '#370548'];
+
+    const RADIAN = Math.PI / 180;
+
+    const containerWidth = 400;
+
     return (
-        <div className="col-6 "  style={{ width: '100%', height: '50%'}} >
-            {/*<ResponsiveContainer width="100%" height="100%">*/}
-                <PieChart width={500} height={400}>
-                    <Tooltip label="name>"/>
-                    <Legend name="name" verticalAlign="top"/>
+        <div className="col-6" style={{width: '100%', height: '400px'}}>
+            <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                    <Tooltip label="name>" />
+                    {/*<Legend name="name" verticalAlign="top" />*/}
                     <Pie
                         data={data1}
-                        dataKey="value"
-                        nameKey="name"
-
                         cx="50%"
                         cy="50%"
-                        innerRadius={75}
-                        outerRadius={100}
+                        innerRadius={70}
+                        outerRadius={90}
                         fill="#8884d8"
-                        label={({name, value}) => `${name} » ${value.toFixed(2)}`}
-                        animationDuration={500}
+                        dataKey="value"
+                        label={({ name, percent, value }) => (
+                                `${name} 
+                                 ${(percent * 100).toFixed(0)}%`
+                                // (${value.toFixed(2)}м²)`
+                        )}
                     >
                         {data1.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
                 </PieChart>
-            {/*</ResponsiveContainer>*/}
+            </ResponsiveContainer>
         </div>
     );
 };

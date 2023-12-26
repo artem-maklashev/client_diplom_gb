@@ -173,52 +173,50 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
 
 
             {errorText && <div className="error-message">{errorText}</div>}
-            <Container>
-                <Row xs={1} md={1} lg={1}>
-                    <Col className="d-flex justify-content-center">
-                        <div className="col-lg-11 ">
-                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
+            <Container className="col-lg-11 mb-5 ">
+                <Row className="p-4" >
+                    {/*<Col className="d-flex justify-content-center">*/}
+                        {/*<Col className="lg-11 mb-5">*/}
+                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example"   >
                                 <Tab eventKey="table" title="Таблица">
-                                    <Col className="d-flex justify-content-center">
-                                        <div className="col-sm-10 ">
+                                    {/*<Col className="d-flex justify-content-center">*/}
+                                        <Col className="d-flex justify-content-center">
                                             <GypsumBoardTable data={gypsumBoardData}/>
-                                        </div>
-                                    </Col>
+                                        </Col>
+                                    {/*</Col>*/}
                                 </Tab>
                                 <Tab eventKey="bar" title="График">
-
-                                    <Container>
-                                        <Row>
-                                            <Col className="col-lg-6">
+                                    <Col className="col-12">
+                                        <Row  className=" justify-content-center">
+                                            <Col className="col-lg-4">
                                                 <GypsumBoardChart raw_data={gypsumBoardData}/>
                                             </Col>
-                                            <div className="col-xxl-6 ">
-                                                <div className="row d-flex justify-content-center">
+                                            <Col className="col-lg-4 ">
+                                                <Row className="d-flex justify-content-center">
                                                     <EdgeChart edgeData={productionData}/>
-                                                </div>
-                                                <div className="row d-flex justify-content-center">
+                                                </Row>
+                                                <Row className="d-flex justify-content-center">
                                                     <ThicknessChart edgeData={productionData}/>
-                                                </div>
-                                            </div>
-                                            <div className="col-xxl">
-                                                <div className="row d-flex justify-content-center">
-                                                    <DefectChart data={productionData}/>
-                                                </div>
-                                            </div>
+                                                </Row>
+                                            </Col>
+                                            <Col className="col-lg-4">
+                                                    какой то график
+                                            </Col>
                                         </Row>
-                                    </Container>
+                                        <Row className="d-flex justify-content-center">
+                                            <Col className="col-xxl">
+                                                    <DefectChart data={productionData}/>
+                                            </Col>
+                                        </Row>
+                                    </Col>
 
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*</div>*/}
                                 </Tab>
                                 <Tab eventKey="opinion" title="В разработке" disabled={true}>
                                     В разработке...
                                 </Tab>
                             </Tabs>
-                        </div>
-                    </Col>
+                        {/*</Col>*/}
+                    {/*</Col>*/}
                 </Row>
             </Container>
         </div>

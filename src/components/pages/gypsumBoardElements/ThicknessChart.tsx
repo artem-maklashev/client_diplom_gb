@@ -44,11 +44,11 @@ const ThicknessChart: React.FC<BoardProductionProps> = ({edgeData}) => {
     //цвета секторов диаграммы
     const COLORS = ['#0088FE', '#00C49F', '#282cff', '#370548'];
     return (
-        <div className="col-6 "  style={{ width: '100%', height: '50%'}} >
-            {/*<ResponsiveContainer width="100%" height="100%">*/}
+        <div className="col-4 "  style={{ width: '100%', height: '400px'}} >
+            <ResponsiveContainer width="100%" height="100%">
             <PieChart width={500} height={400}>
                 <Tooltip label="name>"/>
-                <Legend name="name" verticalAlign="top"/>
+                {/*<Legend name="name" verticalAlign="top"/>*/}
                 <Pie
                     data={data1}
                     dataKey="value"
@@ -56,8 +56,8 @@ const ThicknessChart: React.FC<BoardProductionProps> = ({edgeData}) => {
 
                     cx="50%"
                     cy="50%"
-                    innerRadius={75}
-                    outerRadius={100}
+                    innerRadius={70}
+                    outerRadius={90}
                     fill="#8884d8"
                     label={({name, value}) => `${name} » ${value.toFixed(2)}`}
                     animationDuration={500}
@@ -67,7 +67,7 @@ const ThicknessChart: React.FC<BoardProductionProps> = ({edgeData}) => {
                     ))}
                 </Pie>
             </PieChart>
-            {/*</ResponsiveContainer>*/}
+            </ResponsiveContainer>
         </div>
     );
 };
