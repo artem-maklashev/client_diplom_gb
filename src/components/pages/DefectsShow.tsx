@@ -105,7 +105,7 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
     return (
         <div className="row mt-5" style={{backgroundColor: '#b5b5b5'}}>
             <Container className="container mt-auto">
-                <div className="row mt-5">
+                <div className="row mt-5 justify-content-center">
                     <div className="col-md-3 mb-3 mx-auto">
                         <div className="input-group">
                           <span className="input-group-text" id="basic-addon1">
@@ -141,13 +141,13 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
 
 
             {errorText && <div className="error-message">{errorText}</div>}
-            <Container>
-                <Row xs={1} md={1} lg={1}>
+            <Container className="p-lg-2 mb-5">
+                <Row xs={1} md={5} lg={1} className="d-flex justify-content-center">
                     <Row className="d-flex justify-content-center">
                         <div className="col-lg-11 ">
-                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
-                                <Tab eventKey="table" title="Таблица">
-                                    <Row className="justify-content-center">
+                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
+                                <Tab eventKey="table" title="Таблица" className="mb-5">
+                                    <Row className="justify-content-center ">
                                         <Col className="col-lg-8">
                                             <DefectsTable defectsLog={defectsData} data={productionData}/>
                                         </Col>
@@ -156,7 +156,7 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
                                         </Col>
                                     </Row>
                                 </Tab>
-                                <Tab eventKey="bar" title="График">
+                                <Tab eventKey="bar" title="График" className="mb-5">
                                     <Row className="justify-content-center">
                                         <ChartDefects defectsLog={defectsData} data={productionData} />
                                     </Row>

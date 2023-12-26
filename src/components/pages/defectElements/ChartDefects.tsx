@@ -7,7 +7,7 @@ import {
     Area,
     AreaChart,
     Bar,
-    BarChart,
+    BarChart, Brush,
     CartesianGrid, Cell, Label, LabelList,
     Legend, Pie, PieChart,
     ResponsiveContainer,
@@ -113,6 +113,7 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                         {/*</text>*/}
                         <Area type="monotone" dataKey="defectsPresent" stroke="#8884d8" fillOpacity={1}
                               fill="url(#colorUv)"/>
+
                     </AreaChart>
                 </ResponsiveContainer>
             </Col>
@@ -170,5 +171,5 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
             </Col>
         </Row>
     </Col>;
-}
+};
 export default ChartDefects;
