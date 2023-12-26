@@ -142,7 +142,7 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
 
             {errorText && <div className="error-message">{errorText}</div>}
             <Container>
-                <Row xs={1} md={1} lg={1}>
+                <Row xs={1} md={1} lg={1} className="mb-5">
                     <Col className="d-flex justify-content-center">
                         <div className="col-lg-11 ">
                             <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >

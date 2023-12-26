@@ -11,6 +11,7 @@ import {
     LabelList, ResponsiveContainer
 } from 'recharts';
 import React from "react";
+import { Col } from "react-bootstrap";
 
 interface GypsumBoardTableProps {
     raw_data: GypsumBoardInputData[];
@@ -21,32 +22,34 @@ const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({raw_data}) => {
     const filteredData = data.filter(item => item.factValue >= 0);
     return (
 
-        <div style={{width: 'auto', height: '800px'}}>
+        <Col className="justify-content-start" style={{width: '100%', height: '800px'}}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={filteredData}
                     layout="vertical"
-                    margin={{top: 5, right: 50, bottom: 20, left: 10}}
+                    margin={{top: 5, right: 5, bottom: 20, left: 5}}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis type="number" dataKey="factValue" hide/>
+                    <XAxis xAxisId="first" type="number" dataKey="factValue" hide />
+                    <XAxis xAxisId="second" type="number" dataKey="planValue" hide domain={[0, 'dataMax + 30000']} />
+
                     <YAxis
                         type="category"
                         dataKey="boardTitle"
                         tick={{stroke: 'black', strokeWidth: 0.5, fontSize: 12}}
-                        width={200}
+                        width={180}
                     />
                     <Tooltip/>
-                    <Legend verticalAlign="top" height={36}/>
-                    <Bar dataKey="factValue" fill="#3498db" animationDuration={500} >
+                    <Legend verticalAlign="top" height={36} />
+                    <Bar dataKey="factValue" fill="#3498db" animationDuration={500} xAxisId="second">
                         <LabelList position="right"/>
                     </Bar>
-                    <Bar dataKey="planValue" fill="grey">
-                        <LabelList position="right"/>
+                    <Bar dataKey="planValue" fill="grey" animationDuration={450} xAxisId="second">
+                        <LabelList position="right"  />
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>
-        </div>
+        </Col>
 
     );
 

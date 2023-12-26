@@ -4,11 +4,11 @@ import GypsumBoardTable from "./gypsumBoardElements/GypsumBoardTable";
 import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import './MyStyle.css'
-import BoardProduction from "../../model/production/BoardProduction";
 import EdgeChart from "./gypsumBoardElements/EdgeChart";
 import DefectChart from "./gypsumBoardElements/DefectChart";
 import ThicknessChart from "./gypsumBoardElements/ThicknessChart";
 import {useFetchProductionData} from "./commonElements/GetProductionData";
+import TypesChart from './gypsumBoardElements/TypesChart';
 
 interface GypsumBoardShowProps {
 }
@@ -200,7 +200,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
                                                 </Row>
                                             </Col>
                                             <Col className="col-lg-4">
-                                                    какой то график
+                                                 <TypesChart edgeData={productionData} />
                                             </Col>
                                         </Row>
                                         <Row className="d-flex justify-content-center">
