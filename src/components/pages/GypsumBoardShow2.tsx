@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./gypsumBoardElements/GypsumBoardTable";
-import GypsumBoardChart from './gypsumBoardElements/GypsumBoardChart';
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import './MyStyle.css'
 import EdgeChart from "./gypsumBoardElements/EdgeChart";
@@ -9,6 +8,8 @@ import DefectChart from "./gypsumBoardElements/DefectChart";
 import ThicknessChart from "./gypsumBoardElements/ThicknessChart";
 import {useFetchProductionData} from "./commonElements/GetProductionData";
 import TypesChart from './gypsumBoardElements/TypesChart';
+import GypsumBoardChart from "./gypsumBoardElements/GypsumBoardChart";
+
 
 interface GypsumBoardShowProps {
 }
@@ -19,7 +20,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
     // const [productionData, setProductionData] = useState<BoardProduction[]>([]);
-    const {productionData, } = useFetchProductionData(selectedStartDate, selectedEndDate);
+    const {productionData,} = useFetchProductionData(selectedStartDate, selectedEndDate);
     const fetchGypsumBoardData = useCallback(async () => {
         try {
 
@@ -135,7 +136,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
 
 
     return (
-        <div className="row mt-5 justify-content-center" style={{ backgroundColor: '#b5b5b5' }} >
+        <div className="row mt-5 justify-content-center" style={{backgroundColor: '#b5b5b5'}}>
             <Container className="container mt-auto">
                 <div className="row mt-5">
                     <div className="col-md-3 mb-3 mx-auto">
@@ -174,53 +175,53 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
 
             {errorText && <div className="error-message">{errorText}</div>}
             <Container className="col-lg-11 mb-5 ">
-                <Row className="p-4" >
+                <Row className="p-4">
                     {/*<Col className="d-flex justify-content-center">*/}
-                        {/*<Col className="lg-11 mb-5">*/}
-                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example"   >
-                                <Tab eventKey="table" title="Таблица">
-                                    {/*<Col className="d-flex justify-content-center">*/}
-                                        <Col className="d-flex justify-content-center">
-                                            <GypsumBoardTable data={gypsumBoardData}/>
-                                        </Col>
-                                    {/*</Col>*/}
-                                </Tab>
-                                <Tab eventKey="bar" title="График">
-                                    <Col className="col-12">
-                                        <Row  className=" justify-content-center">
-                                            <Col className="col-lg-4">
-                                                <GypsumBoardChart raw_data={gypsumBoardData}/>
-                                            </Col>
-                                            <Col className="col-lg-4 ">
-                                                <Row className="d-flex justify-content-center">
-                                                    <EdgeChart edgeData={productionData}/>
-                                                </Row>
-                                                <Row className="d-flex justify-content-center">
-                                                    <ThicknessChart edgeData={productionData}/>
-                                                </Row>
-                                            </Col>
-                                            <Col className="col-lg-4">
-                                                 <TypesChart edgeData={productionData} />
-                                            </Col>
+                    {/*<Col className="lg-11 mb-5">*/}
+                    <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
+                        <Tab eventKey="table" title="Таблица">
+                            {/*<Col className="d-flex justify-content-center">*/}
+                            <Col className="d-flex justify-content-center">
+                                <GypsumBoardTable data={gypsumBoardData}/>
+                            </Col>
+                            {/*</Col>*/}
+                        </Tab>
+                        <Tab eventKey="bar" title="График">
+                            <Col className="col-12">
+                                <Row className=" justify-content-center">
+                                    <Col className="col-lg-4">
+                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
+                                    </Col>
+                                    <Col className="col-lg-4 ">
+                                        <Row className="d-flex justify-content-center">
+                                            <EdgeChart edgeData={productionData}/>
                                         </Row>
                                         <Row className="d-flex justify-content-center">
-                                            <Col className="col-xxl">
-                                                    <DefectChart data={productionData}/>
-                                            </Col>
+                                            <ThicknessChart edgeData={productionData}/>
                                         </Row>
                                     </Col>
+                                    <Col className="col-lg-4 d-flex align-items-center">
+                                        <TypesChart edgeData={productionData}/>
+                                    </Col>
+                                </Row>
+                                <Row className="d-flex justify-content-center">
+                                    <Col className="col-xxl">
+                                        <DefectChart data={productionData}/>
+                                    </Col>
+                                </Row>
+                            </Col>
 
-                                </Tab>
-                                <Tab eventKey="opinion" title="В разработке" disabled={true}>
-                                    В разработке...
-                                </Tab>
-                            </Tabs>
-                        {/*</Col>*/}
+                        </Tab>
+                        <Tab eventKey="opinion" title="В разработке" disabled={true}>
+                            В разработке...
+                        </Tab>
+                    </Tabs>
+                    {/*</Col>*/}
                     {/*</Col>*/}
                 </Row>
             </Container>
         </div>
-);
+    );
 };
 
 export default GypsumBoardShow;

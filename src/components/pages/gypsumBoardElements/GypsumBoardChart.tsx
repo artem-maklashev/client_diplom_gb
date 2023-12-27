@@ -2,13 +2,13 @@ import GypsumBoardInputData from "../../../model/inputData/GypsumBoardInputData"
 import {
     BarChart,
     Bar,
-
     XAxis,
     YAxis,
     CartesianGrid,
     Legend,
     Tooltip,
-    LabelList, ResponsiveContainer
+    ResponsiveContainer,
+    LabelList
 } from 'recharts';
 import React from "react";
 import { Col } from "react-bootstrap";
@@ -17,11 +17,15 @@ interface GypsumBoardTableProps {
     raw_data: GypsumBoardInputData[];
 }
 
-const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({raw_data}) => {
+const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({ raw_data}) => {
+    if (raw_data.length === 0) {
+        return (<div>Данных нет</div>);
+    } else {
+        console.log('Получены данные в размере ' + raw_data.length);
+    }
     const data = raw_data.sort((a, b) => (a.factValue > b.factValue ? -1 : 1));
     const filteredData = data.filter(item => item.factValue >= 0);
     return (
-
         <Col className="justify-content-start" style={{width: '100%', height: '800px'}}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -32,7 +36,6 @@ const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({raw_data}) => {
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis xAxisId="first" type="number" dataKey="factValue" hide />
                     <XAxis xAxisId="second" type="number" dataKey="planValue" hide domain={[0, 'dataMax + 30000']} />
-
                     <YAxis
                         type="category"
                         dataKey="boardTitle"
@@ -50,8 +53,7 @@ const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({raw_data}) => {
                 </BarChart>
             </ResponsiveContainer>
         </Col>
-
     );
+};
 
-}
 export default GypsumBoardChart;

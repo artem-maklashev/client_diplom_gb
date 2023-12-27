@@ -25,7 +25,7 @@ const EdgeChart: React.FC<BoardProductionProps> = ({ edgeData }) => {
             value.gypsumBoardCategory.id === 4
     );
     if (data.length === 0) {
-        return <div>Данных нет</div>;
+        return (<div>Данных нет</div>);
     } else {
         console.log('Получены данные в размере ' + data.length);
     }
