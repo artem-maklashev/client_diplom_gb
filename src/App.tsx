@@ -2,10 +2,9 @@ import React from 'react';
 import './App.css';
 import {Route, BrowserRouter as Router, Navigate, Routes} from 'react-router-dom';
 import NavigationBar from './components/navigation/NavigationBar';
-// import GypsumBoardShow from './components/pages/GypsumBoardShow';
-import MainPage from './components/pages/MainPage';
-import GypsumBoardShow2 from "./components/pages/GypsumBoardShow2";
 import Footer from './components/navigation/Footer';
+import MainPage from "./components/pages/MainPage";
+import GypsumBoardShow2 from "./components/pages/GypsumBoardShow2";
 
 function App() {
     return (
@@ -14,12 +13,12 @@ function App() {
             <NavigationBar/>
             <div className="container-fluid">
                 <div className='flex-grow-1'>
-                    <Router>
-                        <Routes>
-                            {/*<Route path="/board" element={<GypsumBoardShow2/>}/>*/}
-                            {/*<Route path="/" element={<MainPage/>}/>*/}
-                        </Routes>
-                    </Router>
+                {/*    <Router>*/}
+                {/*        <Routes>*/}
+                {/*/!*            <Route path="/board" element={<GypsumBoardShow2/>}/>*!/*/}
+                {/*/!*            <Route path="/" element={<MainPage/>}/>*!/*/}
+                {/*        </Routes>*/}
+                {/*    </Router>*/}
 
                 </div>
             </div>

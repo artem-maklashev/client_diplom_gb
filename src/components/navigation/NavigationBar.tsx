@@ -9,7 +9,8 @@ import DefectsShow from "../pages/DefectsShow";
 function NavigationBar() {
     return (
 
-        <Router>
+        // <Router>
+        <div>
             <Navbar expand="lg" className="bg-body-tertiary fixed-top">
                 <div className="container-fluid">
                     <NavbarBrand href="/">Декоратор</NavbarBrand>
@@ -44,8 +45,8 @@ function NavigationBar() {
                 <Route path="/boardDelays" element={<DelaysShow />}/>
                 <Route path="/boardDefects" element={<DefectsShow />}/>
             </Routes>
-        </Router>
-
+         {/*</Router>*/}
+</div>
     );
 }
 
