@@ -1,3 +1,4 @@
+import React from "react";
 import Delays from "../../../model/delays/Delays";
 import DelayDataPrepare from "./DalayDataPrepare";
 

@@ -1,5 +1,6 @@
 import BoardProduction from "../../../model/production/BoardProduction";
 import {Pie, PieChart, Cell, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import React from "react";
 
 // Класс для представления данных
 class ChartData {

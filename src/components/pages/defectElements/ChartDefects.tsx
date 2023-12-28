@@ -118,10 +118,10 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                 </ResponsiveContainer>
             </Col>
         </Row>
-        <Row>
-            <Col className="col-4" style={{width: '50%', height: '300px'}}>
+        <Row >
+            <Col className="col-lg-6 col-12 mb-5" style={{ height: '300px'}}>
                 <h3 className="text-center">Процент брака по сменам</h3>
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer >
                     <BarChart
                         data={toChartData}
                         layout="vertical"
@@ -139,13 +139,13 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                         <Bar dataKey={entry => entry[1]} fill="#3498db" animationDuration={500}>
                             <LabelList position="right"
                                        formatter={(value: number, entry: any) => {
-                                           return value.toPrecision(2)+ " %" ;
+                                           return value.toFixed(2)+ " %" ;
                                        }}/>
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>
             </Col>
-            <Col className="col-8 "  style={{width: '50%', height: '300px'}} >
+            <Col className="col-lg-6 col-12 mb-5" style={{ height: '300px'}}>
                 <h3 className="text-center">Виды брака</h3>
                 <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={500} height={300}>
