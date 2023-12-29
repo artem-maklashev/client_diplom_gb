@@ -1,5 +1,8 @@
 FROM nginx
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+
 WORKDIR /usr/share/react
 
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
