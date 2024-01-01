@@ -25,7 +25,7 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
 
             });
 
-            const response = await fetch(`http://localhost:8080/api/allboard/defects?${params.toString()}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard/defects?${params.toString()}`);
 
             if (!response.ok) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);

@@ -29,7 +29,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
                 endDate: selectedEndDate
             });
 
-            const response = await fetch(`http://localhost:8080/api/allboard?${params.toString()}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard?${params.toString()}`);
 
             if (!response.ok) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
@@ -174,50 +174,43 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
 
 
             {errorText && <div className="error-message">{errorText}</div>}
-            <Container className="col-lg-11 mb-5 ">
+            <Container className="col-lg-11 mb-5">
                 <Row className="p-4">
-                    {/*<Col className="d-flex justify-content-center">*/}
-                    {/*<Col className="lg-11 mb-5">*/}
                     <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                         <Tab eventKey="table" title="Таблица">
-                            {/*<Col className="d-flex justify-content-center">*/}
                             <Col className="d-flex justify-content-center">
-                                <GypsumBoardTable data={gypsumBoardData}/>
+                                <GypsumBoardTable data={gypsumBoardData} />
                             </Col>
-                            {/*</Col>*/}
                         </Tab>
                         <Tab eventKey="bar" title="График">
                             <Col className="col-12">
-                                <Row className=" justify-content-center">
-                                    <Col className="col-lg-4">
-                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
+                                <Row className="justify-content-center">
+                                    <Col xs={12} sm={6} md={4} lg={4}>
+                                        <GypsumBoardChart raw_data={gypsumBoardData} />
                                     </Col>
-                                    <Col className="col-lg-4 ">
+                                    <Col xs={12} sm={6} md={4} lg={4}>
                                         <Row className="d-flex justify-content-center">
-                                            <EdgeChart edgeData={productionData}/>
+                                            <EdgeChart edgeData={productionData} />
                                         </Row>
                                         <Row className="d-flex justify-content-center">
-                                            <ThicknessChart edgeData={productionData}/>
+                                            <ThicknessChart edgeData={productionData} />
                                         </Row>
                                     </Col>
-                                    <Col className="col-lg-4 d-flex align-items-center">
-                                        <TypesChart edgeData={productionData}/>
+                                    <Col xs={12} sm={12} md={4} lg={4} className="d-flex align-items-center">
+                                        <TypesChart edgeData={productionData} />
                                     </Col>
                                 </Row>
                                 <Row className="d-flex justify-content-center">
-                                    <Col className="col-xxl">
-                                        <DefectChart data={productionData}/>
+                                    <Col xs={12} className="col-xxl">
+                                        <DefectChart data={productionData} />
                                     </Col>
                                 </Row>
                             </Col>
-
                         </Tab>
                         <Tab eventKey="opinion" title="В разработке" disabled={true}>
                             В разработке...
                         </Tab>
                     </Tabs>
-                    {/*</Col>*/}
-                    {/*</Col>*/}
                 </Row>
             </Container>
         </div>

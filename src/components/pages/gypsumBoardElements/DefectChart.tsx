@@ -90,7 +90,8 @@ const DefectChart: React.FC<BoardProductionProps> = ({data}) => {
 
         return (
             // <div className="row">
-            <div className="col-12" style={{width: '100%', height: '300px'}}>
+            <div className="col-12 mb-5" style={{width: '100%', height: '300px'}}>
+                <h3 className="text-center">Процент брака</h3>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data1}
                                margin={{top: 30, right: 30, left: 0, bottom: 0}}>
@@ -105,9 +106,9 @@ const DefectChart: React.FC<BoardProductionProps> = ({data}) => {
                         <YAxis dataKey="defectsPresent" label="%"/>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <Tooltip/>
-                            <text x={600} y={15} textAnchor="middle" dominantBaseline="middle" fill="black">
-                                Процент брака
-                            </text>
+                            {/*<text x={600} y={15} textAnchor="middle" dominantBaseline="middle" fill="black">*/}
+                            {/*    Процент брака*/}
+                            {/*</text>*/}
                         <Area type="monotone" dataKey="defectsPresent" stroke="#8884d8" fillOpacity={1}
                               fill="url(#colorUv)"/>
                     </AreaChart>

@@ -1,8 +1,7 @@
 import BoardDefectsLog from "../../../model/defects/BoardDefectsLog";
 import BoardProduction from "../../../model/production/BoardProduction";
-import {ChartData} from "chart.js";
 import DefectChartData from "../gypsumBoardElements/DefectChartData";
-import boardProduction from "../../../model/production/BoardProduction";
+
 
 class ProductionByShift {
     total: number;

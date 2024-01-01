@@ -26,7 +26,7 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
 
             });
 
-            const response = await fetch(`http://localhost:8080/api/allboard/delays?${params.toString()}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard/delays?${params.toString()}`);
 
             if (!response.ok) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);

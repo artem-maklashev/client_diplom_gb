@@ -1,5 +1,6 @@
 import BoardProduction from "../../../model/production/BoardProduction";
 import {Pie, PieChart, Cell, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import React from "react";
 
 // Класс для представления данных
 class ChartData {
@@ -45,6 +46,7 @@ const ThicknessChart: React.FC<BoardProductionProps> = ({edgeData}) => {
     const COLORS = ['#0088FE', '#00C49F', '#282cff', '#370548'];
     return (
         <div className="col-4 "  style={{ width: '100%', height: '400px'}} >
+            <h3 className="text-center">Толщина</h3>
             <ResponsiveContainer width="100%" height="100%">
             <PieChart width={500} height={400}>
                 <Tooltip label="name>"/>
