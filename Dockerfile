@@ -2,6 +2,7 @@ FROM nginx
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+#ENV REACT_APP_API_URL="http://localhost:8080/api"
 
 WORKDIR /usr/share/react
 
@@ -13,7 +14,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-COPY .env.development .env
+COPY .env.production .env
 
 RUN npm run build
 

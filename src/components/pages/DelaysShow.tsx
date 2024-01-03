@@ -8,7 +8,6 @@ interface DelaysShowProps {
 }
 
 
-
 const DelaysShow: React.FC<DelaysShowProps> = () => {
     const [delaysData, setDelaysData] = useState<Delays[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
@@ -67,7 +66,7 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
-        
+
     };
 
     // Function to get the current date in YYYY-MM-DD format (required by input type="date")
@@ -103,7 +102,7 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
 
 
     return (
-        <div className="row mt-5" style={{ backgroundColor: '#b5b5b5' }}>
+        <div className="row mt-5" style={{backgroundColor: '#b5b5b5'}}>
             <Container className="container mt-auto">
                 <div className="row mt-5">
                     <div className="col-md-3 mb-3 mx-auto">
@@ -141,37 +140,32 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
 
 
             {errorText && <div className="error-message">{errorText}</div>}
-            <Container>
-                <Row xs={1} md={1} lg={1} className="mb-5">
-                    <Col className="d-flex justify-content-center">
-                        <div className="col-lg-11 ">
-                            <Tabs defaultActiveKey="table" id="uncontrolled-tab-example" >
-                                <Tab eventKey="table" title="Таблица">
-                                    <Col className="d-flex justify-content-center">
-                                        <div className="col-sm-10 ">
-                                            <DelaysTable data={delaysData}/>
-                                        </div>
-                                    </Col>
-                                </Tab>
-                                <Tab eventKey="bar" title="График">
+            <Container className="p-lg-2 mb-5">
+                <Row xs={1} md={1} lg={1} className="d-flex justify-content-center">
 
-                                    <Container>
-                                        <Row>
-                                            <DelaysChart delays_data={delaysData} />
-                                        </Row>
-                                    </Container>
+                    <div className="col-lg-11 ">
+                        <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
+                            <Tab eventKey="table" title="Таблица" className="mb-5">
+                                <Container>
+                                    <Row >
+                                        <DelaysTable data={delaysData}/>
+                                    </Row>
+                                </Container>
+                            </Tab>
+                            <Tab eventKey="bar" title="График">
+                                <Container>
+                                    <Row>
+                                        <DelaysChart delays_data={delaysData}/>
+                                    </Row>
+                                </Container>
 
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                    {/*</div>*/}
-                                </Tab>
-                                <Tab eventKey="opinion" title="В разработке" disabled={true}>
-                                    В разработке...
-                                </Tab>
-                            </Tabs>
-                        </div>
-                    </Col>
+                            </Tab>
+                            <Tab eventKey="opinion" title="В разработке" disabled={true}>
+                                В разработке...
+                            </Tab>
+                        </Tabs>
+                    </div>
+
                 </Row>
             </Container>
         </div>
