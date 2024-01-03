@@ -46,14 +46,14 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
     const toChartData = productionChartData().sort((a, b) => b[1] - a[1]);
 
     let chartData = preparedData.getDefectsByDate();
-    
+
     chartData = chartData.map(value => ({
         ...value,
         defectsPresent: Number(((value.totalValue - value.value) * 100 / value.totalValue).toFixed(2))
     })).sort((a, b) => {
         const pDate1 = new Date(a.pDate);
         const pDate2 = new Date(b.pDate);
-        return pDate1.getTime()-pDate2.getTime();
+        return pDate1.getTime() - pDate2.getTime();
     });
 
     if (chartData && chartData.length > 0) {
@@ -63,8 +63,8 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
     } else {
         console.error('chartData is empty or undefined');
     }
-    
-    
+
+
     const tempArray: DefectChartData[] = [];
 
     chartData.forEach((value) => {
@@ -73,23 +73,23 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
             throw new Error('Invalid date object');
         }
         const day = dateValue.getDate().toString().padStart(2, '0');
-        tempArray.push({ ...value, pDay: day });
+        tempArray.push({...value, pDay: day});
     });
     for (let i = 0; i < tempArray.length; i++) {
-        chartData[i]=tempArray[i];
+        chartData[i] = tempArray[i];
     }
     // console.log("---->"+chartData[0].pDay);
 
     const COLORS = ['#0088FE', '#00C49F', '#282cff', '#38054a',
         '#720779', "#e228ff"];
-    
+
     if (chartData && chartData.length > 0) {
         const firstDate = chartData[0].pDay;
         console.log("первый день графика " + firstDate);
     } else {
         console.error('chartData is empty or undefined');
     }
-    
+
     return <Col>
         <Row>
             <h3 className="text-center">Процент брака по дням</h3>
@@ -104,7 +104,7 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                                 <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
                             </linearGradient>
                         </defs>
-                        <XAxis dataKey="pDay" />
+                        <XAxis dataKey="pDay"/>
                         <YAxis dataKey="defectsPresent" label="%"/>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <Tooltip/>
@@ -118,10 +118,10 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                 </ResponsiveContainer>
             </Col>
         </Row>
-        <Row >
-            <Col className="col-lg-6 col-12 mb-5" style={{ height: '300px'}}>
+        <Row>
+            <Col className="col-lg-6 col-12 mb-5" style={{height: '300px'}}>
                 <h3 className="text-center">Процент брака по сменам</h3>
-                <ResponsiveContainer >
+                <ResponsiveContainer>
                     <BarChart
                         data={toChartData}
                         layout="vertical"
@@ -133,41 +133,66 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                             type="category"
                             dataKey={entry => entry[0]}
                             tick={{stroke: 'black', strokeWidth: 0.5, fontSize: 12}}
-                            width={200}
+                            width={10}
                         />
                         <Tooltip/>
                         <Bar dataKey={entry => entry[1]} fill="#3498db" animationDuration={500}>
                             <LabelList position="right"
                                        formatter={(value: number, entry: any) => {
-                                           return value.toFixed(2)+ " %" ;
+                                           return value.toFixed(2) + " %";
                                        }}/>
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>
             </Col>
-            <Col className="col-lg-6 col-12 mb-5" style={{ height: '300px'}}>
+            <Col className="col-lg-6 col-12 mb-5 " >
                 <h3 className="text-center">Виды брака</h3>
-                <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={500} height={300}>
-                    <Tooltip />
-                    <Pie
-                        data={defectsDataToChart}
-                        dataKey={(entry) => entry[1]}
-                        nameKey={(entry) => entry[0]}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={75}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        animationDuration={500}
-                        label={({ value})=>  `${value.toFixed(2)}`}
-                    >
-                        {defectsDataToChart.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                    </Pie>
-                </PieChart>
-                </ResponsiveContainer>
+                <Row className="d-flex justify-content-center" >
+                <Col className="col-12" style={{width: '100%', height: '300px'}}>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <PieChart width={500} height={300}>
+                            <Tooltip/>
+                            <Pie
+                                data={defectsDataToChart}
+                                dataKey={(entry) => entry[1]}
+                                nameKey={(entry) => entry[0]}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={75}
+                                outerRadius={100}
+                                fill="#8884d8"
+                                animationDuration={500}
+                                label={({value}) => `${value.toFixed(2)}`}
+                            >
+                                {defectsDataToChart.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                                ))}
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                </Col>
+                    {/*<ResponsiveContainer width="100%" height="100%">*/}
+                    {/*    <PieChart width={500} height={300}>*/}
+                    {/*        <Tooltip/>*/}
+                    {/*        <Pie*/}
+                    {/*            data={defectsDataToChart}*/}
+                    {/*            dataKey={(entry) => entry[1]}*/}
+                    {/*            nameKey={(entry) => entry[0]}*/}
+                    {/*            cx="50%"*/}
+                    {/*            cy="50%"*/}
+                    {/*            innerRadius={75}*/}
+                    {/*            outerRadius={100}*/}
+                    {/*            fill="#8884d8"*/}
+                    {/*            animationDuration={500}*/}
+                    {/*            label={({value}) => `${value.toFixed(2)}`}*/}
+                    {/*        >*/}
+                    {/*            {defectsDataToChart.map((entry, index) => (*/}
+                    {/*                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>*/}
+                    {/*            ))}*/}
+                    {/*        </Pie>*/}
+                    {/*    </PieChart>*/}
+                    {/*</ResponsiveContainer>*/}
+                </Row>
             </Col>
         </Row>
     </Col>;
