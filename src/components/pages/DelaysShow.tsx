@@ -144,16 +144,16 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
                 <Row xs={1} md={1} lg={1} className="d-flex justify-content-center">
 
                     <div className="col-lg-11 ">
-                        <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
-                            <Tab eventKey="table" title="Таблица" className="mb-5">
-                                <Container>
+                        <Tabs defaultActiveKey="table">
+                            <Tab eventKey="table" title="Таблица" >
+                                <Col>
                                     <Row >
                                         <DelaysTable data={delaysData}/>
                                     </Row>
-                                </Container>
+                                </Col>
                             </Tab>
                             <Tab eventKey="bar" title="График">
-                                <Container>
+                                <Container className="align-items-center justify-content-center" >
                                     <Row>
                                         <DelaysChart delays_data={delaysData}/>
                                     </Row>

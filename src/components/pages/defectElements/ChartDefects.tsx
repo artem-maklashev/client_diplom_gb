@@ -22,6 +22,16 @@ interface ChartDefectsProps {
     defectsLog: BoardDefectsLog[];
     data: BoardProduction[];
 }
+interface Data {
+    key: string;
+    value: number;
+}
+
+interface CustomTooltipProps {
+    active?: boolean;
+    payload?: Array<{ payload: Data }>;
+}
+
 
 const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
     if (data.length === 0 && defectsLog.length === 0) {
@@ -33,7 +43,9 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
     const productionData = preparedData.getProductionDict();
     const originalProductionChartData = Object.entries(productionData);
     const defectsData = preparedData.getCategorySummary();
-    const defectsDataToChart = Object.entries(defectsData);
+    // const defectsDataToChart: Data[]= Object.entries(defectsData);
+    const defectsDataToChart: Data[] = Object.entries(defectsData).map(([key, value]) => ({ key, value }));
+
     const productionChartData = () => {
         const chartData: [shift: string, percent: number][] = [];
         originalProductionChartData.forEach(item => {
@@ -89,6 +101,26 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
     } else {
         console.error('chartData is empty or undefined');
     }
+
+    const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
+        if (active && payload && payload.length) {
+            const data = payload[0]?.payload as Data;
+
+            // Проверяем, определено ли значение data.value
+            if (data && typeof data.value !== 'undefined') {
+                return (
+                    <div style={{ background: 'white', border: '1px solid #ccc', padding: '10px' }}>
+                        <p>{`${data.key}: ${data.value.toFixed(2)}`}</p>
+                    </div>
+                );
+            }
+        }
+
+        return null;
+    };
+
+
+
 
     return <Col>
         <Row>
@@ -151,11 +183,12 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                 <Col className="col-12" style={{width: '100%', height: '300px'}}>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart width={500} height={300}>
-                            <Tooltip/>
+
                             <Pie
                                 data={defectsDataToChart}
-                                dataKey={(entry) => entry[1]}
-                                nameKey={(entry) => entry[0]}
+                                dataKey="value"
+                                // nameKey={(entry) => entry[0]}
+                                nameKey="key"
                                 cx="50%"
                                 cy="50%"
                                 innerRadius={75}
@@ -168,6 +201,7 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
                                 ))}
                             </Pie>
+                            <Tooltip content={<CustomTooltip />} />
                         </PieChart>
                     </ResponsiveContainer>
                 </Col>
