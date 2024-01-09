@@ -101,6 +101,8 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
+        setGypsumBoardData([]);
+        fetchGypsumBoardData();
     };
 
     // Function to get the current date in YYYY-MM-DD format (required by input type="date")

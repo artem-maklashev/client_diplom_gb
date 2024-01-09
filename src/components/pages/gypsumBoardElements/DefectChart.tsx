@@ -67,7 +67,7 @@ const DefectChart: React.FC<BoardProductionProps> = ({data}) => {
 
         data1 = data1.map(value => ({
             ...value,
-            defectsPresent: Number(((value.totalValue - value.value) * 100 / value.totalValue).toFixed(2))
+            defectsPresent: value.totalValue !== 0 ? Number(((value.totalValue - value.value) * 100 / value.totalValue).toFixed(2)) : 0
         }));
         data1.forEach(value => {
             const dateValue = new Date(value.pDate); // Assuming pDate is the date property in your data

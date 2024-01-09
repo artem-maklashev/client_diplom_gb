@@ -61,7 +61,7 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
 
     chartData = chartData.map(value => ({
         ...value,
-        defectsPresent: Number(((value.totalValue - value.value) * 100 / value.totalValue).toFixed(2))
+        defectsPresent: value.totalValue !== 0 ? Number(((value.totalValue - value.value) * 100 / value.totalValue).toFixed(2)) : 0
     })).sort((a, b) => {
         const pDate1 = new Date(a.pDate);
         const pDate2 = new Date(b.pDate);
@@ -137,7 +137,7 @@ const ChartDefects: React.FC<ChartDefectsProps> = ({defectsLog, data}) => {
                             </linearGradient>
                         </defs>
                         <XAxis dataKey="pDay"/>
-                        <YAxis dataKey="defectsPresent" label="%"/>
+                        <YAxis dataKey="defectsPresent" label="%" domain={[0, 'dataMax']}/>
                         <CartesianGrid strokeDasharray="3 3"/>
                         <Tooltip/>
                         {/*<text x={600} y={15} textAnchor="middle" dominantBaseline="middle" fill="black">*/}
