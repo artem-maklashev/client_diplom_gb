@@ -49,6 +49,7 @@ const TypesChart: React.FC<BoardProductionProps> = ({ edgeData }) => {
    
     return (
         <div className="col-12" style={{ width : "100%", height:"400px" }}>
+            <h3 className="text-center">Тип ГСП</h3>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={data2}
