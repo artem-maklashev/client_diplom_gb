@@ -17,12 +17,12 @@ const MainPage: React.FC<MainPageProps> = () => {
     }
     const fetchPlan = useCallback(async () => {
         try {
-            const params = new URLSearchParams(
-                {planDate: planDate()}
-            );
+            // const params = new URLSearchParams(
+            //     {planDate: planDate()}
+            // );
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/planData?${params.toString()}`);
-
+            // const response = await fetch(`${process.env.REACT_APP_API_URL}/planData?${params.toString()}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/planData`);
             if (!response.ok) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
             }
