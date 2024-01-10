@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import Plan from "../../model/gypsumBoard/Plan";
-import {Col, Container} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 
 interface MainPageProps {
 }
@@ -35,7 +35,7 @@ const MainPage: React.FC<MainPageProps> = () => {
             setErrorText(error.message);
             setBoardPlanData([]);
         }
-    }, [planDate]);
+    }, []);
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -43,16 +43,24 @@ const MainPage: React.FC<MainPageProps> = () => {
         };
 
         fetchData();
-    }, [planDate, fetchPlan]);
-    const plan = boardPlanData.reduce((acc, plan) => acc + plan.value, 0);
+    }, [fetchPlan]);
+    // alert("Получены данные по плану в размере " + boardPlanData.length);
+    const plan = boardPlanData.reduce((acc, plan) => acc + (plan.planValue), 0);
+
+
+
 
     return (
-        <Container>
-            <Col className="mt-3">
-                <h1>План на текущий месяц</h1>
-                <p> {plan}</p>
-            </Col>
-        </Container>
+        <Row>
+            <Container>
+                <Row className="mt-5">
+                    <Col className="mt-3">
+                        <h3>План на текущий месяц</h3>
+                        <p> {plan}</p>
+                    </Col>
+                </Row>
+            </Container>
+        </Row>
     );
 }
 export default MainPage;
