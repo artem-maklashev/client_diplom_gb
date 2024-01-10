@@ -1,9 +1,9 @@
 import React, {useCallback, useState} from "react";
 import Plan from "../../model/gypsumBoard/Plan";
-import {Card, Col, Container, Row} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import ApiService from "../../service/ApiService";
 import BoardProduction from "../../model/production/BoardProduction";
-import {forEach} from "react-bootstrap/ElementChildren";
+
 
 interface MainPageProps {
 }
