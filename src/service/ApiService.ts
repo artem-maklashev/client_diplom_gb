@@ -23,10 +23,10 @@ class ApiService {
             const now = new Date();
             const params = new URLSearchParams({
 
-                    // startDate: this.getFormattedDate(new Date(now.getFullYear(), now.getMonth(), 1)),
-                    // endDate: this.getFormattedDate(now)
-                    startDate: this.getFormattedDate(new Date(2023, 12, 1)),
-                    endDate: this.getFormattedDate(new Date(2023,12, 10))
+                    startDate: this.getFormattedDate(new Date(now.getFullYear(), now.getMonth(), 1)),
+                    endDate: this.getFormattedDate(now)
+                    // startDate: this.getFormattedDate(new Date(2023, 12, 1)),
+                    // endDate: this.getFormattedDate(new Date(2023,12, 10))
                 })
             ;
 

@@ -3,13 +3,16 @@ import ProductTypes from "./ProductTypes";
 
 class Product {
     id: number;
-    pType: ProductTypes;
+    ptype: ProductTypes;
     tradeMark: TradeMark;
 
     constructor(id: number, pType: ProductTypes, tradeMark: TradeMark) {
         this.id = id;
-        this.pType = pType;
+        this.ptype = pType;
         this.tradeMark = tradeMark;
+    }
+    toString() {
+        return this.ptype.name;
     }
 }
 export default Product;
