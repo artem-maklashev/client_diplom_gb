@@ -17,6 +17,7 @@ const DefectsTable: React.FC<DefectsTableProps> = ({defectsLog, data}) => {
 
     const preparedDefects = new DefectsDataPrepare(defectsLog, data);
     const summaryDefects = preparedDefects.getSummary();
+    console.log(defectsLog.length);
 
 
     const mainTable = (

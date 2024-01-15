@@ -95,7 +95,7 @@ const MainPage: React.FC<MainPageProps> = () => {
                         </Card.Text>
                         <Card.Subtitle>Отклонение</Card.Subtitle>
                         <Card.Text>
-                            {value - toTodayPlan} м²
+                            {(value - toTodayPlan).toFixed(0)} м²
                         </Card.Text>
                         <Card.Subtitle>Процент брака</Card.Subtitle>
                         <Card.Text>
