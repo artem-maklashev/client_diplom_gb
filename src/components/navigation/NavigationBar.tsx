@@ -5,6 +5,7 @@ import GypsumBoardShow2 from "../pages/GypsumBoardShow2";
 import MainPage from "../pages/MainPage";
 import DelaysShow from "../pages/DelaysShow";
 import DefectsShow from "../pages/DefectsShow";
+import BoardProductionInputForm from "../pages/BoardProductionInputForm";
 
 function NavigationBar() {
     return (
@@ -24,15 +25,15 @@ function NavigationBar() {
                                 <NavDropdown.Item as={Link} to="/board">
                                     Производство
                                 </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/boardDelays" >Простои</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/boardDelays">Простои</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/boardDefects">Брак</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href="/" disabled={true}>
-                                Disabled
+                            <Nav.Link href="/boardReport" >
+                                Выпуск ГСП
                             </Nav.Link>
                         </Nav>
                         <Form className="d-inline-flex">
-                            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                            <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
                             <Button variant="outline-success">Search</Button>
                         </Form>
                     </Navbar.Collapse>
@@ -42,11 +43,12 @@ function NavigationBar() {
             <Routes>
                 <Route path="/board" element={<GypsumBoardShow2/>}/>
                 <Route path="/" element={<MainPage/>}/>
-                <Route path="/boardDelays" element={<DelaysShow />}/>
-                <Route path="/boardDefects" element={<DefectsShow />}/>
+                <Route path="/boardDelays" element={<DelaysShow/>}/>
+                <Route path="/boardDefects" element={<DefectsShow/>}/>
+                <Route path="/boardReport" element={<BoardProductionInputForm/>}/>
             </Routes>
-         {/*</Router>*/}
-</div>
+            {/*</Router>*/}
+        </div>
     );
 }
 

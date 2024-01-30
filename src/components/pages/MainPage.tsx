@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import Plan from "../../model/gypsumBoard/Plan";
-import {Alert, Card, Col, Row} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import ApiService from "../../service/ApiService";
 import BoardProduction from "../../model/production/BoardProduction";
 
@@ -66,7 +66,7 @@ const MainPage: React.FC<MainPageProps> = () => {
     );
 
     const total2 = boardProductionData.filter(board => board.gypsumBoardCategory.id === 1); //.reduce((acc, production) => acc + production.value, 0);
-    alert(sortedBoardProduction.length);
+
 
     const defectPercentResult = total === 0 ? 0 : ((total - value) / total) * 100;
 
