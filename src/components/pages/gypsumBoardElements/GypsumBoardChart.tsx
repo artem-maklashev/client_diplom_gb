@@ -26,12 +26,12 @@ const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({ raw_data}) => {
     const data = raw_data.sort((a, b) => (a.factValue > b.factValue ? -1 : 1));
     const filteredData = data.filter(item => item.factValue >= 0);
     return (
-        <Col className="justify-content-start" style={{width: '100%', height: '800px'}}>
+        <Col className="justify-content-start mx-1" style={{width: '100%', height: '800px'}}>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={filteredData}
                     layout="vertical"
-                    margin={{top: 5, right: 5, bottom: 20, left: 5}}
+                    margin={{top: 5, right: 15, bottom: 20, left: 5}}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis xAxisId="first" type="number" dataKey="factValue" hide />
@@ -45,7 +45,7 @@ const GypsumBoardChart: React.FC<GypsumBoardTableProps> = ({ raw_data}) => {
                     <Tooltip/>
                     <Legend verticalAlign="top" height={36} />
                     <Bar dataKey="factValue" fill="#3498db" animationDuration={500} xAxisId="second">
-                        <LabelList position="right"/>
+                        <LabelList position="right" style={{stroke:'black', strokeWidth: 0.5}}/>
                     </Bar>
                     <Bar dataKey="planValue" fill="grey" animationDuration={450} xAxisId="second">
                         <LabelList position="right"  />

@@ -6,5 +6,8 @@ class TradeMark {
         this.id = id;
         this.name = name;
     }
+    toString() {
+        return this.name;
+    }
 }
 export default TradeMark;

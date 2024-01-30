@@ -34,6 +34,7 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
             const data: BoardDefectsLog[] = await response.json();
             setErrorText(null);
             setDefectsData(data);
+            
         } catch (error: any) {
             console.error(`Произошла ошибка: ${error.message}`);
             setErrorText(error.message);

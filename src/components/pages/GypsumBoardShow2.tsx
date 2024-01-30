@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./gypsumBoardElements/GypsumBoardTable";
-import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
+import {Col, Container, Row, Spinner, Tab, Tabs} from "react-bootstrap";
 import './MyStyle.css'
 import EdgeChart from "./gypsumBoardElements/EdgeChart";
 import DefectChart from "./gypsumBoardElements/DefectChart";
@@ -19,11 +19,11 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
     const [errorText, setErrorText] = useState<string | null>(null);
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate()); // Set initial date to today
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate()); // Set initial date to today
-    // const [productionData, setProductionData] = useState<BoardProduction[]>([]);
+    const [loading, setLoading] = useState<boolean>(false); //для спиннера
     const {productionData,} = useFetchProductionData(selectedStartDate, selectedEndDate);
     const fetchGypsumBoardData = useCallback(async () => {
         try {
-
+            setLoading(true);
             const params = new URLSearchParams({
                 startDate: selectedStartDate,
                 endDate: selectedEndDate
@@ -42,6 +42,8 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
             console.error(`Произошла ошибка: ${error.message}`);
             setErrorText(error.message);
             setGypsumBoardData([]);
+        } finally {
+            setLoading(false);
         }
     }, [selectedStartDate, selectedEndDate]);
     // const fetchProductionData = useCallback(async () => {
@@ -101,6 +103,8 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
+        setGypsumBoardData([]);
+        fetchGypsumBoardData();
     };
 
     // Function to get the current date in YYYY-MM-DD format (required by input type="date")
@@ -133,6 +137,10 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
             year: 'numeric',
         });
     };
+
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
 
     return (
@@ -178,6 +186,13 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
                 <Row className="p-4">
                     <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                         <Tab eventKey="table" title="Таблица">
+                            {loading && (
+                                <div className="text-center mt-3">
+                                    <Spinner animation="border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </Spinner>
+                                </div>
+                                )}
                             <Col className="d-flex justify-content-center">
                                 <GypsumBoardTable data={gypsumBoardData} />
                             </Col>
