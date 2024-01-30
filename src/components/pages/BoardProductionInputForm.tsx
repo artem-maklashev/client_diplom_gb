@@ -9,13 +9,27 @@ const BoardProductionInputForm: React.FC = () => {
         console.log("Selected end date:", endDate);
     };
 
+    let boardLength:number = 0;
     return (
         <Container className="container-fluid p-0">
             <Row className="mt-5">
                 <Col className="col-6">
-                    <DateInput onDatesChange={handleDatesChange} />
+                    <DateInput onDatesChange={handleDatesChange}/>
+                    <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">
+                                    Длина листа до опиловки
+                                </span>
+                        <input
+                            type="number"
+                            id="boardLength"
+                            value={boardLength}
+                            // onChange={}
+                            className="form-control"
+                        />
+                    </div>
                 </Col>
             </Row>
+
         </Container>
     );
 };
