@@ -40,13 +40,13 @@ function NavigationBar() {
                 </div>
             </Navbar>
 
-            <Routes>
-                <Route path="/board" element={<GypsumBoardShow2/>}/>
-                <Route path="/" element={<MainPage/>}/>
-                <Route path="/boardDelays" element={<DelaysShow/>}/>
-                <Route path="/boardDefects" element={<DefectsShow/>}/>
-                <Route path="/boardReport" element={<BoardProductionInputForm/>}/>
-            </Routes>
+            {/*<Routes>*/}
+            {/*    <Route path="/board" element={<GypsumBoardShow2/>}/>*/}
+            {/*    <Route path="/" element={<MainPage/>}/>*/}
+            {/*    <Route path="/boardDelays" element={<DelaysShow/>}/>*/}
+            {/*    <Route path="/boardDefects" element={<DefectsShow/>}/>*/}
+            {/*    <Route path="/boardReport" element={<BoardProductionInputForm/>}/>*/}
+            {/*</Routes>*/}
             {/*</Router>*/}
         </div>
     );

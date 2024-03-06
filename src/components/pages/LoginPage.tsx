@@ -1,6 +1,7 @@
 // src/App.tsx
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 
 interface Credentials {
@@ -9,18 +10,18 @@ interface Credentials {
 }
 
 const LoginPage: React.FC = () => {
-    const [credentials, setCredentials] = useState<Credentials>({ username: '', password: '' });
+    const [credentials, setCredentials] = useState<Credentials>({username: '', password: ''});
     const [loginMessage, setLoginMessage] = useState<string>('');
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
-        setCredentials((prevCredentials) => ({ ...prevCredentials, [name]: value }));
+        const {name, value} = e.target;
+        setCredentials((prevCredentials) => ({...prevCredentials, [name]: value}));
     };
 
     const login = async (): Promise<void> => {
         try {
-            const response = await axios.post(`${process.env.AUTH_URL}`, credentials);
-            const { token } = response.data; // Предполагаем, что бэкенд возвращает токен в свойстве "token"
+            const response = await axios.post(`${process.env.AUTH_URL}` + 'login', credentials);
+            const {token} = response.data; // Предполагаем, что бэкенд возвращает токен в свойстве "token"
             localStorage.setItem('authToken', token);
             // В реальном приложении вы, вероятно, сохраните токен в localStorage или в состоянии приложения
             // Например: localStorage.setItem('authToken', token);
@@ -34,18 +35,49 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="login-page">
-            <h1>Login</h1>
-            <form>
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" value={credentials.username} onChange={handleInputChange} required />
+        <div className="login-page d-flex align-items-center justify-content-center vh-100">
+            <div className="text-center">
+                <h1>Login</h1>
+                <form>
+                    <div className="mb-3">
+                        <label htmlFor="username" className="form-label">
+                            Username:
+                        </label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={credentials.username}
+                            onChange={handleInputChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
 
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" value={credentials.password} onChange={handleInputChange} required />
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">
+                            Password:
+                        </label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={credentials.password}
+                            onChange={handleInputChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
 
-                <button type="button" onClick={login}>Login</button>
-            </form>
-            <p>{loginMessage}</p>
+                    <button type="button" onClick={login} className="btn btn-primary">
+                        Login
+                    </button>
+                </form>
+                <p>{loginMessage}</p>
+                <p>
+                    Don't have an account? <Link to="/register">Register here</Link>.
+                </p>
+            </div>
         </div>
     );
 };
