@@ -89,6 +89,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
 
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGypsumBoardData([]);
         const enteredDate = event.target.value;
         console.log(enteredDate)
         if (event.target.id === "startDateInput") {
@@ -103,7 +104,6 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
-        setGypsumBoardData([]);
         fetchGypsumBoardData();
     };
 
@@ -187,37 +187,41 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
                     <Tabs defaultActiveKey="table" id="uncontrolled-tab-example">
                         <Tab eventKey="table" title="Таблица">
                             {loading && (
-                                <div className="text-center mt-3">
-                                    <Spinner animation="border" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </Spinner>
+                                // <div className="text-center mt-3">
+                                //     <Spinner animation="border" role="status">
+                                //         <span className="visually-hidden">Loading...</span>
+                                //     </Spinner>
+                                // </div>
+                                <div className="preloader-wrapper">
+                                    <span className="preloader"></span>
                                 </div>
-                                )}
-                            <Col className="d-flex justify-content-center">
-                                <GypsumBoardTable data={gypsumBoardData} />
+                            ) || gypsumBoardData.length ===0}
+
+                                <Col className="d-flex justify-content-center">
+                                <GypsumBoardTable data={gypsumBoardData}/>
                             </Col>
                         </Tab>
                         <Tab eventKey="bar" title="График">
                             <Col className="col-12">
                                 <Row className="justify-content-center">
                                     <Col xs={12} sm={6} md={4} lg={4}>
-                                        <GypsumBoardChart raw_data={gypsumBoardData} />
+                                        <GypsumBoardChart raw_data={gypsumBoardData}/>
                                     </Col>
                                     <Col xs={12} sm={6} md={4} lg={4}>
                                         <Row className="d-flex justify-content-center">
-                                            <EdgeChart edgeData={productionData} />
+                                            <EdgeChart edgeData={productionData}/>
                                         </Row>
                                         <Row className="d-flex justify-content-center">
-                                            <ThicknessChart edgeData={productionData} />
+                                            <ThicknessChart edgeData={productionData}/>
                                         </Row>
                                     </Col>
                                     <Col xs={12} sm={12} md={4} lg={4} className="d-flex align-items-center">
-                                        <TypesChart edgeData={productionData} />
+                                        <TypesChart edgeData={productionData}/>
                                     </Col>
                                 </Row>
                                 <Row className="d-flex justify-content-center">
                                     <Col xs={12} className="col-xxl">
-                                        <DefectChart data={productionData} />
+                                        <DefectChart data={productionData}/>
                                     </Col>
                                 </Row>
                             </Col>
