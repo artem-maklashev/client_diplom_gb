@@ -5,8 +5,16 @@ import NavigationBar from './components/navigation/NavigationBar';
 import Footer from './components/navigation/Footer';
 import MainPage from "./components/pages/MainPage";
 import GypsumBoardShow2 from "./components/pages/GypsumBoardShow2";
+import LoginPage from "./components/pages/LoginPage";
 
 function App() {
+    if (localStorage.getItem('authToken') === null) {
+        return (
+            <div>
+                <LoginPage />
+            </div>
+        )
+    }
     return (
 
         <div>
