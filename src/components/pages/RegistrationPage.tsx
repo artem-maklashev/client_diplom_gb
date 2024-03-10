@@ -1,15 +1,16 @@
 // src/RegistrationPage.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "axios";
 
-interface RegistrationData {
+
+interface User {
     username: string;
     email: string;
     password: string;
 }
 
 const RegistrationPage: React.FC = () => {
-    const [registrationData, setRegistrationData] = useState<RegistrationData>({
+    const [registrationData, setRegistrationData] = useState<User>({
         username: '',
         email: '',
         password: '',
@@ -23,8 +24,9 @@ const RegistrationPage: React.FC = () => {
 
     const register = async (): Promise<void> => {
         try {
+            console.log('REACT_APP_AUTH_URL:', 'URL:', `${process.env.REACT_APP_AUTH_URL}/register`);
             // Отправляем запрос на бэкенд для регистрации
-            const response = await axios.post('ваш_адрес_бэкенда/api/register', registrationData);
+            const response = await axios.post(`${process.env.REACT_APP_AUTH_URL}/register`, registrationData);
 
             // Обрабатываем успешный ответ от бэкенда
             setRegistrationMessage('Registration successful!');
