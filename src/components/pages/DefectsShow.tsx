@@ -67,6 +67,7 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
             // Handle invalid date
             setErrorText(`Invalid date format. Please use ${getLocalizedDateFormat()}.`);
         }
+
     };
 
     // Function to get the current date in YYYY-MM-DD format (required by input type="date")

@@ -1,18 +1,18 @@
 // src/App.tsx
 import React, {useState} from 'react';
 import axios from 'axios';
-import {Link} from "react-router-dom";
+import { Link, useNavigate  } from 'react-router-dom';
 
 
 interface Credentials {
-    username: string;
+    email: string;
     password: string;
 }
 
 const LoginPage: React.FC = () => {
-    const [credentials, setCredentials] = useState<Credentials>({username: '', password: ''});
+    const [credentials, setCredentials] = useState<Credentials>({email: '', password: ''});
     const [loginMessage, setLoginMessage] = useState<string>('');
-
+    const navigate = useNavigate();
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = e.target;
         setCredentials((prevCredentials) => ({...prevCredentials, [name]: value}));
@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
 
     const login = async (): Promise<void> => {
         try {
-            const response = await axios.post(`${process.env.AUTH_URL}` + 'login', credentials);
+            const response = await axios.post(`${process.env.REACT_APP_AUTH_URL}/authenticate`, credentials);
             const {token} = response.data; // Предполагаем, что бэкенд возвращает токен в свойстве "token"
             localStorage.setItem('authToken', token);
             // В реальном приложении вы, вероятно, сохраните токен в localStorage или в состоянии приложения
@@ -28,6 +28,7 @@ const LoginPage: React.FC = () => {
 
             setLoginMessage('Login successful!');
             // В этом месте вы можете перенаправить пользователя на другую страницу или выполнить другие действия после успешного входа.
+            navigate('/');
         } catch (error) {
             console.error('Login failed:', error);
             setLoginMessage('Invalid username or password. Please try again.');
@@ -40,14 +41,14 @@ const LoginPage: React.FC = () => {
                 <h1>Login</h1>
                 <form>
                     <div className="mb-3">
-                        <label htmlFor="username" className="form-label">
-                            Username:
+                        <label htmlFor="email" className="form-label">
+                            Email:
                         </label>
                         <input
                             type="text"
-                            id="username"
-                            name="username"
-                            value={credentials.username}
+                            id="email"
+                            name="email"
+                            value={credentials.email}
                             onChange={handleInputChange}
                             className="form-control"
                             required

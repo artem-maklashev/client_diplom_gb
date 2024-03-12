@@ -1,7 +1,5 @@
-// src/RegistrationPage.tsx
-import React, { useState } from 'react';
-import axios from "axios";
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface User {
     username: string;
@@ -16,25 +14,48 @@ const RegistrationPage: React.FC = () => {
         password: '',
     });
     const [registrationMessage, setRegistrationMessage] = useState<string>('');
+    const [backResponse, setBackResponse] = useState('Nothing');
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
-        setRegistrationData((prevData) => ({ ...prevData, [name]: value }));
-    };
-
-    const register = async (): Promise<void> => {
+    // Объявляем функцию registerUser
+    const registerUser = async () => {
         try {
-            console.log('REACT_APP_AUTH_URL:', 'URL:', `${process.env.REACT_APP_AUTH_URL}/register`);
-            // Отправляем запрос на бэкенд для регистрации
-            const response = await axios.post(`${process.env.REACT_APP_AUTH_URL}/register`, registrationData);
+            const response = await fetch('http://localhost:8080/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: registrationData.username,
+                    email: registrationData.email,
+                    password: registrationData.password,
+                }),
+            });
 
-            // Обрабатываем успешный ответ от бэкенда
-            setRegistrationMessage('Registration successful!');
+            if (response.ok) {
+                const jsonData = await response.json();
+                console.log(jsonData);
+
+                if (jsonData.success) {
+                    localStorage.setItem('authToken', jsonData.token);
+                    window.location.href = '/profile';
+                } else {
+                    alert(jsonData.message);
+                }
+            } else {
+                console.error('Server responded with status:', response.status);
+                setRegistrationMessage('Registration failed. Please try again.');
+            }
         } catch (error) {
-            // Обрабатываем ошибку регистрации
             console.error('Registration failed:', error);
             setRegistrationMessage('Registration failed. Please try again.');
         }
+    };
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ): void => {
+        const { name, value } = e.target;
+        setRegistrationData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     return (
@@ -46,24 +67,52 @@ const RegistrationPage: React.FC = () => {
                         <label htmlFor="username" className="form-label">
                             Username:
                         </label>
-                        <input type="text" id="username" name="username" value={registrationData.username} onChange={handleInputChange} className="form-control" required />
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={registrationData.username}
+                            onChange={handleInputChange}
+                            className="form-control"
+                            required
+                        />
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">
                             Email:
                         </label>
-                        <input type="email" id="email" name="email" value={registrationData.email} onChange={handleInputChange} className="form-control" required />
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={registrationData.email}
+                            onChange={handleInputChange}
+                            className="form-control"
+                            required
+                        />
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">
                             Password:
                         </label>
-                        <input type="password" id="password" name="password" value={registrationData.password} onChange={handleInputChange} className="form-control" required />
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={registrationData.password}
+                            onChange={handleInputChange}
+                            className="form-control"
+                            required
+                        />
                     </div>
 
-                    <button type="button" onClick={register} className="btn btn-primary">
+                    <button
+                        type="button"
+                        onClick={registerUser}
+                        className="btn btn-primary"
+                    >
                         Register
                     </button>
                 </form>
