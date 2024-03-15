@@ -3,6 +3,7 @@ import Delays from "../../model/delays/Delays";
 import {Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import DelaysTable from "./delaysElements/DelaysTable";
 import DelaysChart from "./delaysElements/DelaysChart";
+import {api} from "../../service/Api";
 
 interface DelaysShowProps {
 }
@@ -25,13 +26,13 @@ const DelaysShow: React.FC<DelaysShowProps> = () => {
 
             });
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard/delays?${params.toString()}`);
+            const response = await api.get(`${process.env.REACT_APP_API_URL}/allboard/delays?${params.toString()}`);
 
-            if (!response.ok) {
+            if (!response.data) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
             }
 
-            const data: Delays[] = await response.json();
+            const data: Delays[] = await response.data;
             setErrorText(null);
             setDelaysData(data);
         } catch (error: any) {

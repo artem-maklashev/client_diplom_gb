@@ -1,4 +1,5 @@
 import Plan from "../model/gypsumBoard/Plan";
+import {api} from "./Api";
 import BoardProduction from "../model/production/BoardProduction";
 
 class ApiService {
@@ -6,11 +7,8 @@ class ApiService {
 
     static async fetchTodayPlan(): Promise<Plan[]> {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/planData`);
-            if (!response.ok) {
-                throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
-            }
-            return await response.json();
+            const response = await api.get(`${this.baseUrl}/planData`);
+            return response.data;
         } catch (error: any) {
             console.error(`Произошла ошибка: ${error.message}`);
             throw error;
@@ -18,20 +16,15 @@ class ApiService {
     }
 
     static async fetchTodayBoardProduction(): Promise<BoardProduction[]> {
-
         try {
             const now = new Date();
-            const params = new URLSearchParams({
+            const params = {
+                startDate: this.getFormattedDate(new Date(now.getFullYear(), now.getMonth(), 1)),
+                endDate: this.getFormattedDate(now)
+            };
 
-                    startDate: this.getFormattedDate(new Date(now.getFullYear(), now.getMonth(), 1)),
-                    endDate: this.getFormattedDate(now)
-                    // startDate: this.getFormattedDate(new Date(2023, 12, 1)),
-                    // endDate: this.getFormattedDate(new Date(2023,12, 10))
-                })
-            ;
-
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard/production?${params.toString()}`);
-            return await response.json();
+            const response = await api.get(`${this.baseUrl}/allboard/production`, { params });
+            return response.data;
         } catch (error: any) {
             console.error(`Произошла ошибка: ${error.message}`);
             throw error;

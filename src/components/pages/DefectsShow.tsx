@@ -5,6 +5,7 @@ import DefectsTable from "./defectElements/DefectsTable";
 import {useFetchProductionData} from "./commonElements/GetProductionData";
 import ShiftsDefect from "./defectElements/ShiftsDefect";
 import ChartDefects from "./defectElements/ChartDefects";
+import {api} from "../../service/Api";
 
 interface DefectsShowProps {
 }
@@ -25,13 +26,13 @@ const DefectsShow: React.FC<DefectsShowProps> = () => {
 
             });
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard/defects?${params.toString()}`);
+            const response = await api.get(`${process.env.REACT_APP_API_URL}/allboard/defects?${params.toString()}`);
 
-            if (!response.ok) {
+            if (!response.data) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
             }
 
-            const data: BoardDefectsLog[] = await response.json();
+            const data: BoardDefectsLog[] = await response.data;
             setErrorText(null);
             setDefectsData(data);
             

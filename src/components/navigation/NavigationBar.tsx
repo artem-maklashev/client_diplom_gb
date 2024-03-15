@@ -8,47 +8,32 @@ import DefectsShow from "../pages/DefectsShow";
 import BoardProductionInputForm from "../pages/BoardProductionInputForm";
 
 function NavigationBar() {
+    const handleLogout = () => {
+        localStorage.removeItem('authToken'); // Удаление токена при выходе
+    };
     return (
-
-        // <Router>
-        <div>
-            <Navbar expand="lg" className="bg-body-tertiary fixed-top">
-                <div className="container-fluid">
-                    <NavbarBrand href="/">Декоратор</NavbarBrand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="/">
-                                Home
-                            </Nav.Link>
-                            <NavDropdown title="Гипсокартон" id="board-dropdown">
-                                <NavDropdown.Item as={Link} to="/board">
-                                    Производство
-                                </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/boardDelays">Простои</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/boardDefects">Брак</NavDropdown.Item>
-                            </NavDropdown>
-                            <Nav.Link href="/boardReport" >
-                                Выпуск ГСП
-                            </Nav.Link>
-                        </Nav>
-                        <Form className="d-inline-flex">
-                            <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-                            <Button variant="outline-success">Search</Button>
-                        </Form>
-                    </Navbar.Collapse>
-                </div>
-            </Navbar>
-
-            {/*<Routes>*/}
-            {/*    <Route path="/board" element={<GypsumBoardShow2/>}/>*/}
-            {/*    <Route path="/" element={<MainPage/>}/>*/}
-            {/*    <Route path="/boardDelays" element={<DelaysShow/>}/>*/}
-            {/*    <Route path="/boardDefects" element={<DefectsShow/>}/>*/}
-            {/*    <Route path="/boardReport" element={<BoardProductionInputForm/>}/>*/}
-            {/*</Routes>*/}
-            {/*</Router>*/}
-        </div>
+        <Navbar expand="lg" className="bg-body-tertiary fixed-top">
+            <div className="container-fluid">
+                <NavbarBrand as={Link} to="/">Декоратор</NavbarBrand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/">Home</Nav.Link>
+                        <NavDropdown title="Гипсокартон" id="board-dropdown">
+                            <NavDropdown.Item as={Link} to="/board">Производство</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/boardDelays">Простои</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/boardDefects">Брак</NavDropdown.Item>
+                        </NavDropdown>
+                        <Nav.Link as={Link} to="/boardReport">Выпуск ГСП</Nav.Link>
+                        <Nav.Link as={Link} to="/login" onClick={handleLogout}>Logout</Nav.Link>
+                    </Nav>
+                    <Form className="d-inline-flex">
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                        <Button variant="outline-success">Search</Button>
+                    </Form>
+                </Navbar.Collapse>
+            </div>
+        </Navbar>
     );
 }
 

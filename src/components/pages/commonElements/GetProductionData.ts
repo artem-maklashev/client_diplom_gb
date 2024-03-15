@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import BoardProduction from '../../../model/production/BoardProduction';
+import {api} from "../../../service/Api";
 
 
 export const useFetchProductionData = (
@@ -16,13 +17,13 @@ export const useFetchProductionData = (
                 endDate: selectedEndDate,
             });
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/allboard/production?${params.toString()}`);
+            const response = await api.get(`${process.env.REACT_APP_API_URL}/allboard/production?${params.toString()}`);
 
-            if (!response.ok) {
+            if (!response.data) {
                 throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
             }
 
-            const data: BoardProduction[] = await response.json();
+            const data: BoardProduction[] = await response.data;
             setErrorText(null);
             setProductionData(data);
             console.log("Получены данные по выпуску продукции " + data.length);
