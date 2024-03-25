@@ -48,7 +48,8 @@ const MainPage: React.FC<MainPageProps> = () => {
 
     const sortedBoardProduction = boardProductionData.filter(board => board.gypsumBoardCategory.id < 5);
     const todayPlan = boardPlanData.filter(plan => plan.planDate === getCurrentDate());
-    const toTodayPlan = boardPlanData.filter(plan => new Date(plan.planDate) < new Date(getCurrentDate())).reduce((acc, plan) => acc + (plan.planValue), 0);
+    const toTodayPlan = boardPlanData.filter(plan => new Date(plan.planDate) < new Date(getCurrentDate()))
+        .reduce((acc, plan) => acc + (plan.planValue), 0);
 
     const {total, value} = sortedBoardProduction.reduce(
         (acc, board) => {
