@@ -1,17 +1,18 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import Plan from "../../model/gypsumBoard/Plan";
-import {Card, Col, Row} from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import ApiService from "../../service/ApiService";
 import BoardProduction from "../../model/production/BoardProduction";
+import { Link } from "react-router-dom";
 
-
-interface MainPageProps {
-}
+interface MainPageProps {}
 
 const MainPage: React.FC<MainPageProps> = () => {
-    const [boardPlanData, setBoardPlanData] = React.useState<Plan[]>([]);
+    const [boardPlanData, setBoardPlanData] = useState<Plan[]>([]);
     const [errorText, setErrorText] = useState<string | null>(null);
-    const [boardProductionData, setBoardProductionData] = React.useState<BoardProduction[]>([]);
+    const [boardProductionData, setBoardProductionData] = useState<
+        BoardProduction[]
+    >([]);
 
     const fetchPlan = useCallback(async () => {
         try {
@@ -44,18 +45,21 @@ const MainPage: React.FC<MainPageProps> = () => {
         fetchData();
     }, [fetchPlan, fetchBoardProduction]);
 
-    const plan = boardPlanData.reduce((acc, plan) => acc + (plan.planValue), 0);
+    const plan = boardPlanData.reduce((acc, plan) => acc + plan.planValue, 0);
 
-    const sortedBoardProduction = boardProductionData.filter(board => board.gypsumBoardCategory.id < 5);
-    const todayPlan = boardPlanData.filter(plan => plan.planDate === getCurrentDate());
-    const toTodayPlan = boardPlanData.filter(plan => new Date(plan.planDate) < new Date(getCurrentDate()))
-        .reduce((acc, plan) => acc + (plan.planValue), 0);
+    const sortedBoardProduction = boardProductionData.filter(
+        (board) => board.gypsumBoardCategory.id < 5
+    );
+    const todayPlan = boardPlanData.filter(
+        (plan) => plan.planDate === getCurrentDate()
+    );
+    const toTodayPlan = boardPlanData
+        .filter((plan) => new Date(plan.planDate) < new Date(getCurrentDate()))
+        .reduce((acc, plan) => acc + plan.planValue, 0);
 
-    const {total, value} = sortedBoardProduction.reduce(
+    const { total, value } = sortedBoardProduction.reduce(
         (acc, board) => {
             const isCategory1 = board.gypsumBoardCategory.id === 1;
-            // acc.total += isCategory1 ? board.value : 0;
-            // acc.value += isCategory1 ? 0 : board.value;
             if (isCategory1) {
                 acc.total += board.value;
             } else {
@@ -63,46 +67,82 @@ const MainPage: React.FC<MainPageProps> = () => {
             }
             return acc;
         },
-        {total: 0, value: 0}
+        { total: 0, value: 0 }
     );
 
-    const total2 = boardProductionData.filter(board => board.gypsumBoardCategory.id === 1); //.reduce((acc, production) => acc + production.value, 0);
-
-
-    const defectPercentResult = total === 0 ? 0 : ((total - value) / total) * 100;
+    const defectPercentResult =
+        total === 0 ? 0 : ((total - value) / total) * 100;
 
     function getCurrentDate(): string {
         const now = new Date();
         const year = now.getUTCFullYear();
-        const month = (now.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-        const day = now.getUTCDate().toString().padStart(2, '0');
+        const month = (now.getUTCMonth() + 1).toString().padStart(2, "0");
+        const day = now.getUTCDate().toString().padStart(2, "0");
 
         return `${year}-${month}-${day}`;
     }
 
-
     return (
-
         <Row className="mt-5 justify-content-center text-center">
-            <p></p>
             <h2>Показатели за текущий месяц</h2>
             <Col className="mt-3 col-lg-3 col-sm-12">
-                <Card className="text-center bg-body-secondary ">
+                <link rel="stylesheet" type="text/css"
+                      href="https://ost1.gismeteo.ru/assets/flat-ui/legacy/css/informer.min.css"/>
+                <div id="gsInformerID-m63YY8HtnTPf8p" className="gsInformer" style={{width: "240px", height: "227px"}}>
+                    <div className="gsIContent">
+                        <div id="cityLink">
+                            <a href="https://www.gismeteo.ru/weather-tolyatti-4429/" target="_blank"
+                               title="Погода в Тольятти">
+                                <img src="https://ost1.gismeteo.ru/assets/flat-ui/img/gisloader.svg" width="24"
+                                     height="24" alt="Погода в Тольятти" />
+                            </a>
+                        </div>
+                        <div className="gsLinks">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div className="leftCol">
+                                            <a href="https://www.gismeteo.ru/" target="_blank" title="Погода">
+                                                <img alt="Погода"
+                                                     src="https://ost1.gismeteo.ru/assets/flat-ui/img/logo-mini2.png"
+                                                     width="11" height="16"/>
+                                                <img
+                                                    src="https://ost1.gismeteo.ru/assets/flat-ui/img/informer/gismeteo.svg"
+                                                    style={{left: "5px", top: "1px"}}/>
+                                            </a>
+                                        </div>
+                                        <div className="rightCol">
+                                            <a href="https://www.gismeteo.ru/weather-tolyatti-4429/2-weeks/"
+                                               target="_blank" title="Погода в Тольятти на 2 недели">
+                                                <img
+                                                    src="https://ost1.gismeteo.ru/assets/flat-ui/img/informer/forecast-2weeks.ru.svg"
+                                                    style={{top: "auto"}}
+                                                    alt="Погода в Тольятти на 2 недели"/>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <script async src="https://www.gismeteo.ru/api/informer/getinformer/?hash=m63YY8HtnTPf8p"></script>
+            </Col>
+
+            <Col className="mt-3 col-lg-3 col-sm-12">
+                <Card className="text-center bg-body-secondary">
                     <Card.Body>
-                        <Card.Header className="mb-2"><h3>Производство ГСП</h3></Card.Header>
+                        <Card.Header className="mb-2">
+                            <h3>Производство ГСП</h3>
+                        </Card.Header>
                         <Card.Subtitle>План на текущий месяц</Card.Subtitle>
                         <Card.Text>
-                            <p> {plan}м²</p>
+                            <p>{plan} м²</p>
                         </Card.Text>
                         <Card.Subtitle>Отклонение</Card.Subtitle>
-                        <Card.Text>
-                            {(value - toTodayPlan).toFixed(0)} м²
-                        </Card.Text>
+                        <Card.Text>{(value - toTodayPlan).toFixed(0)} м²</Card.Text>
                         <Card.Subtitle>Процент брака</Card.Subtitle>
-                        <Card.Text>
-
-                             {defectPercentResult.toFixed(2)}%
-                        </Card.Text>
+                        <Card.Text>{defectPercentResult.toFixed(2)}%</Card.Text>
                         <Card.Subtitle>Сегодня в производстве</Card.Subtitle>
                         {todayPlan.length > 0 ? (
                             <table className="table table-sm mt-1 table-striped table-bordered">
@@ -113,10 +153,15 @@ const MainPage: React.FC<MainPageProps> = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {todayPlan.map(board => (
+                                {todayPlan.map((board) => (
                                     <tr key={board.gypsumBoard.id}>
-                                        <td>{board.gypsumBoard.tradeMark.name + " тип " + board.gypsumBoard.boardType.name + "-" + board.gypsumBoard.edge.name + " "
-                                            + board.gypsumBoard.thickness.value + "-" + board.gypsumBoard.width.value + "-" + board.gypsumBoard.length.value}</td>
+                                        <td>
+                                            {board.gypsumBoard.tradeMark.name} тип{" "}
+                                            {board.gypsumBoard.boardType.name}-{board.gypsumBoard.edge.name}{" "}
+                                            {board.gypsumBoard.thickness.value}-
+                                            {board.gypsumBoard.width.value}-
+                                            {board.gypsumBoard.length.value}
+                                        </td>
                                         <td>{board.planValue} м²</td>
                                     </tr>
                                 ))}
@@ -126,19 +171,16 @@ const MainPage: React.FC<MainPageProps> = () => {
                             <p>На сегодня производство не запланировано.</p>
                         )}
                     </Card.Body>
-
-
                 </Card>
             </Col>
             <Col className="mt-3 col-lg-3 col-sm-12">
-                <Card className="text-center bg-body-secondary ">
+                <Card className="text-center bg-body-secondary">
                     <Card.Body>
-                        <Card.Header className="mb-2"><h3>Производство ГВ</h3></Card.Header>
+                        <Card.Header className="mb-2">
+                            <h3>Производство ГВ</h3>
+                        </Card.Header>
                         <Card.Subtitle>План на текущий месяц</Card.Subtitle>
-                        <Card.Text>
-                            В разработке
-                        </Card.Text>
-
+                        <Card.Text>В разработке</Card.Text>
                         <Card.Subtitle>Сегодня в производстве</Card.Subtitle>
                         {todayPlan.length > 0 ? (
                             <table className="table table-sm mt-1 table-striped table-bordered border-2">
@@ -149,26 +191,25 @@ const MainPage: React.FC<MainPageProps> = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {/*{todayPlan.map(board => (*/}
-                                {/*    <tr key={board.gypsumBoard.id}>*/}
-                                {/*        <td>{board.gypsumBoard.tradeMark.name + " тип " + board.gypsumBoard.boardType.name + "-" + board.gypsumBoard.edge.name + " "*/}
-                                {/*            + board.gypsumBoard.thickness.value + "-" + board.gypsumBoard.width.value + "-" + board.gypsumBoard.length.value}</td>*/}
-                                {/*        <td>{board.planValue}</td>*/}
-                                {/*    </tr>*/}
-                                {/*))}*/}
+                                {/* {todayPlan.map(board => (
+                    <tr key={board.gypsumBoard.id}>
+                      <td>{board.gypsumBoard.tradeMark.name} тип {board.gypsumBoard.boardType.name}-{board.gypsumBoard.edge.name}
+                      {board.gypsumBoard.thickness.value}-{board.gypsumBoard.width.value}-{board.gypsumBoard.length.value}</td>
+                      <td>{board.planValue}</td>
+                    </tr>
+                  ))} */}
                                 </tbody>
                             </table>
                         ) : (
                             <p>На сегодня производство не запланировано.</p>
                         )}
                     </Card.Body>
-
-
                 </Card>
             </Col>
         </Row>
-
-
     );
-}
+};
+
 export default MainPage;
+
+
