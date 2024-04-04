@@ -4,6 +4,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import ApiService from "../../service/ApiService";
 import BoardProduction from "../../model/production/BoardProduction";
 import { Link } from "react-router-dom";
+import WeatherWidget from "./WeatherWidget";
 
 interface MainPageProps {}
 
@@ -86,47 +87,7 @@ const MainPage: React.FC<MainPageProps> = () => {
         <Row className="mt-5 justify-content-center text-center">
             <h2>Показатели за текущий месяц</h2>
             <Col className="mt-3 col-lg-3 col-sm-12">
-                <link rel="stylesheet" type="text/css"
-                      href="https://ost1.gismeteo.ru/assets/flat-ui/legacy/css/informer.min.css"/>
-                <div id="gsInformerID-m63YY8HtnTPf8p" className="gsInformer" style={{width: "240px", height: "227px"}}>
-                    <div className="gsIContent">
-                        <div id="cityLink">
-                            <a href="https://www.gismeteo.ru/weather-tolyatti-4429/" target="_blank"
-                               title="Погода в Тольятти">
-                                <img src="https://ost1.gismeteo.ru/assets/flat-ui/img/gisloader.svg" width="24"
-                                     height="24" alt="Погода в Тольятти" />
-                            </a>
-                        </div>
-                        <div className="gsLinks">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div className="leftCol">
-                                            <a href="https://www.gismeteo.ru/" target="_blank" title="Погода">
-                                                <img alt="Погода"
-                                                     src="https://ost1.gismeteo.ru/assets/flat-ui/img/logo-mini2.png"
-                                                     width="11" height="16"/>
-                                                <img
-                                                    src="https://ost1.gismeteo.ru/assets/flat-ui/img/informer/gismeteo.svg"
-                                                    style={{left: "5px", top: "1px"}}/>
-                                            </a>
-                                        </div>
-                                        <div className="rightCol">
-                                            <a href="https://www.gismeteo.ru/weather-tolyatti-4429/2-weeks/"
-                                               target="_blank" title="Погода в Тольятти на 2 недели">
-                                                <img
-                                                    src="https://ost1.gismeteo.ru/assets/flat-ui/img/informer/forecast-2weeks.ru.svg"
-                                                    style={{top: "auto"}}
-                                                    alt="Погода в Тольятти на 2 недели"/>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <script async src="https://www.gismeteo.ru/api/informer/getinformer/?hash=m63YY8HtnTPf8p"></script>
+               <WeatherWidget />
             </Col>
 
             <Col className="mt-3 col-lg-3 col-sm-12">

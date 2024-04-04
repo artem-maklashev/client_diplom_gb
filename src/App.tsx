@@ -111,7 +111,8 @@ function App() {
                 <Route path="/boardDelays" element={<DelaysShow />} />
                 <Route path="/boardDefects" element={<DefectsShow />} />
                 <Route path="/boardReport" element={<BoardProductionInputForm />} />
-                <Route path="/" element={tokenValid ? <MainPage /> : <Navigate to="/login" />} />
+                {/*<Route path="/" element={tokenValid ? <MainPage /> : <Navigate to="/login" />} />*/}
+                <Route path="/" element={<MainPage />} />
                 <Route path="/register" element={<RegistrationPage />} />
                 <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
                 <Route path="/*" element={<Navigate to="/login" />} />
