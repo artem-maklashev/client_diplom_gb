@@ -87,7 +87,14 @@ const MainPage: React.FC<MainPageProps> = () => {
         <Row className="mt-5 justify-content-center text-center">
             <h2>Показатели за текущий месяц</h2>
             <Col className="mt-3 col-lg-3 col-sm-12">
-               <WeatherWidget />
+                <Card className="text-center bg-body-primary">
+                    <Card.Body>
+                        <Card.Header className="mb-2">
+                            <h3>Погода</h3>
+                                 <WeatherWidget />
+                        </Card.Header>
+                    </Card.Body>
+                </Card>
             </Col>
 
             <Col className="mt-3 col-lg-3 col-sm-12">
