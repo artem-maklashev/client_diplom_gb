@@ -1,16 +1,19 @@
 import React from "react";
-import {Button, Form, FormControl, Nav, Navbar, NavbarBrand, NavDropdown} from "react-bootstrap";
-import {Link, Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import GypsumBoardShow2 from "../pages/GypsumBoardShow2";
-import MainPage from "../pages/MainPage";
-import DelaysShow from "../pages/DelaysShow";
-import DefectsShow from "../pages/DefectsShow";
-import BoardProductionInputForm from "../pages/BoardProductionInputForm";
+import { Button, Form, FormControl, Nav, Navbar, NavbarBrand, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function NavigationBar() {
+interface NavigationBarProps {
+    tokenValid?: boolean; // Пропс для проверки валидности токена
+    onLogout: () => void; // Пропс для функции выхода из системы
+}
+
+function NavigationBar({ tokenValid, onLogout }: NavigationBarProps) {
     const handleLogout = () => {
-        localStorage.removeItem('authToken'); // Удаление токена при выходе
+        // localStorage.removeItem('authToken'); // Удаление токена при выходе
+        // alert("Вы вышли из системы");
+        onLogout(); // Вызываем функцию выхода из системы
     };
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary fixed-top">
             <div className="container-fluid">
@@ -25,7 +28,11 @@ function NavigationBar() {
                             <NavDropdown.Item as={Link} to="/boardDefects">Брак</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Link} to="/boardReport">Выпуск ГСП</Nav.Link>
-                        <Nav.Link as={Link} to="/login" onClick={handleLogout}>Logout</Nav.Link>
+                        {tokenValid ? (
+                            <Nav.Link as={Link} to="/login" onClick={handleLogout}>Logout</Nav.Link>
+                        ) : (
+                            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                        )}
                     </Nav>
                     <Form className="d-inline-flex">
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />

@@ -68,7 +68,7 @@ function App() {
     useEffect(() => {
         async function validateToken() {
             // setValidatingToken(true);
-            const authToken = localStorage.getItem('authToken');
+            let authToken = localStorage.getItem('authToken');
             if (authToken) {
                 try {
                     const response = await api.get(`${process.env.REACT_APP_AUTH_URL}/validate`, {
@@ -95,9 +95,17 @@ function App() {
     }, []);
 
     const handleLoginSuccess = () => {
+
         setTokenValid(true);
         navigate("/"); // Перенаправление на "/" после успешного логина
     };
+
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        alert('Вы успешно вышли');
+        setTokenValid(false); // Обновляем состояние токена в App
+    };
+
 
     if (validatingToken) {
         return null; // Пока происходит проверка токена, ничего не отображаем
@@ -105,14 +113,14 @@ function App() {
     return (
         // <Router>
         <div>
-            <NavigationBar />
+            <NavigationBar tokenValid={tokenValid} onLogout={handleLogout} />
             <Routes>
-                <Route path="/board" element={<GypsumBoardShow2 />} />
-                <Route path="/boardDelays" element={<DelaysShow />} />
-                <Route path="/boardDefects" element={<DefectsShow />} />
-                <Route path="/boardReport" element={<BoardProductionInputForm />} />
-                {/*<Route path="/" element={tokenValid ? <MainPage /> : <Navigate to="/login" />} />*/}
-                <Route path="/" element={<MainPage />} />
+                <Route path="/board" element={tokenValid ? <GypsumBoardShow2 /> : <Navigate to="/login" />} />
+                <Route path="/boardDelays" element={tokenValid? <DelaysShow /> : <Navigate to="/login" />} />
+                <Route path="/boardDefects" element={tokenValid ? <DefectsShow /> : <Navigate to="/login" />} />
+                <Route path="/boardReport" element={tokenValid? <BoardProductionInputForm /> : <Navigate to="/login" />} />
+                <Route path="/" element={tokenValid ? <MainPage /> : <Navigate to="/login" />} />
+                {/*<Route path="/" element={<MainPage />} />*/}
                 <Route path="/register" element={<RegistrationPage />} />
                 <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
                 <Route path="/*" element={<Navigate to="/login" />} />

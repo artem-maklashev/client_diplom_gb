@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import { Container, Row } from 'react-bootstrap';
-import {api, setAuthToken} from "../../service/Api"; // Импортируйте необходимые компоненты Bootstrap
+import {api, setAuthToken} from "../../service/Api";
 
 interface Credentials {
     email: string;
@@ -34,6 +34,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             setLoginMessage('Invalid username or password. Please try again.');
         }
     };
+
 
     return (
         <Container>
