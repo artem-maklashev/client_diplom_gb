@@ -1,18 +1,20 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import GypsumBoardInputData from "../../model/inputData/GypsumBoardInputData";
 import GypsumBoardTable from "./gypsumBoardElements/GypsumBoardTable";
-import { Col, Container, Row, Spinner, Tab, Tabs } from "react-bootstrap";
+import {Col, Container, Row, Spinner, Tab, Tabs} from "react-bootstrap";
 import './MyStyle.css'
 import EdgeChart from "./gypsumBoardElements/EdgeChart";
 import DefectChart from "./gypsumBoardElements/DefectChart";
 import ThicknessChart from "./gypsumBoardElements/ThicknessChart";
-import { useFetchProductionData } from "./commonElements/GetProductionData";
+import {useFetchProductionData} from "./commonElements/GetProductionData";
 import TypesChart from './gypsumBoardElements/TypesChart';
 import GypsumBoardChart from "./gypsumBoardElements/GypsumBoardChart";
 import axios from 'axios';
 import {api} from "../../service/Api";
+import width from "../../model/gypsumBoard/Width";
 
-interface GypsumBoardShowProps {}
+interface GypsumBoardShowProps {
+}
 
 const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
     const [gypsumBoardData, setGypsumBoardData] = useState<GypsumBoardInputData[]>([]);
@@ -20,7 +22,7 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
     const [selectedStartDate, setSelectedStartDate] = useState<string>(getFirstDate());
     const [selectedEndDate, setSelectedEndDate] = useState<string>(getCurrentDate());
     const [loading, setLoading] = useState<boolean>(false);
-    const { productionData } = useFetchProductionData(selectedStartDate, selectedEndDate);
+    const {productionData} = useFetchProductionData(selectedStartDate, selectedEndDate);
 
     const fetchGypsumBoardData = useCallback(async () => {
         try {
@@ -109,33 +111,40 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
                     <div className="col-md-3 mb-3 mx-auto">
                         <div className="input-group">
                             <span className="input-group-text" id="basic-addon1">
-                                Дата начала
+                                Период:
                             </span>
                             <input
                                 type="date"
                                 id="startDateInput"
                                 value={selectedStartDate}
                                 onChange={handleDateChange}
-                                className="form-control"
+                                className="form-control "
+                            />
+                            <input
+                                type="date"
+                                id="endDateInput"
+                                value={selectedEndDate}
+                                onChange={handleDateChange}
+                                className="form-control "
                             />
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-3 mb-3 mx-auto">
-                            <div className="input-group">
-                                <span className="input-group-text" id="basic-addon1">
-                                    Дата окончания
-                                </span>
-                                <input
-                                    type="date"
-                                    id="endDateInput"
-                                    value={selectedEndDate}
-                                    onChange={handleDateChange}
-                                    className="form-control"
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="row">*/}
+                    {/*    <div className="col-md-3 mb-3 mx-auto">*/}
+                    {/*        <div className="input-group">*/}
+                    {/*            <span className="input-group-text" id="basic-addon1">*/}
+                    {/*                Дата окончания*/}
+                    {/*            </span>*/}
+                    {/*            <input*/}
+                    {/*                type="date"*/}
+                    {/*                id="endDateInput"*/}
+                    {/*                value={selectedEndDate}*/}
+                    {/*                onChange={handleDateChange}*/}
+                    {/*                className="form-control "*/}
+                    {/*            />*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
             </Container>
 
@@ -168,8 +177,10 @@ const GypsumBoardShow: React.FC<GypsumBoardShowProps> = () => {
                                             <ThicknessChart edgeData={productionData}/>
                                         </Row>
                                     </Col>
-                                    <Col xs={12} sm={12} md={4} lg={4} className="d-flex align-items-center">
-                                        <TypesChart edgeData={productionData}/>
+                                    <Col xs={12} sm={12} md={4} lg={4} className="d-flex align-items-center" >
+
+                                            <TypesChart edgeData={productionData}/>
+
                                     </Col>
                                 </Row>
                                 <Row className="d-flex justify-content-center">

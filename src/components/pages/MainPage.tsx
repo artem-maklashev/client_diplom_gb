@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import Plan from "../../model/gypsumBoard/Plan";
-import { Card, Col, Row } from "react-bootstrap";
+import {Card, Col, Container, Row} from "react-bootstrap";
 import ApiService from "../../service/ApiService";
 import BoardProduction from "../../model/production/BoardProduction";
 import { Link } from "react-router-dom";
@@ -84,9 +84,10 @@ const MainPage: React.FC<MainPageProps> = () => {
     }
 
     return (
+        <Container className="mt-5 " fluid>
         <Row className="mt-5 justify-content-center text-center">
-            <h2>Показатели за текущий месяц</h2>
-            <Col className="mt-3 col-lg-3 col-sm-12">
+            <h2 className="mt-3 mb-3">Показатели за текущий месяц</h2>
+            <Col className="mt-3 col-lg-2 col-sm-12">
                 <Card className="text-center bg-body-primary">
                     <Card.Body>
                         <Card.Header className="mb-2">
@@ -175,6 +176,7 @@ const MainPage: React.FC<MainPageProps> = () => {
                 </Card>
             </Col>
         </Row>
+    </Container>
     );
 };
 

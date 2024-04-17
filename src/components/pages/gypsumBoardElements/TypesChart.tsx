@@ -1,6 +1,7 @@
 import React from 'react';
 import { PieChart, Pie, Tooltip, Cell, Legend, ResponsiveContainer, BarChart, CartesianGrid, Bar, LabelList, XAxis, YAxis } from 'recharts';
 import BoardProduction from "../../../model/production/BoardProduction";
+import {Container} from "react-bootstrap";
 
 // Класс для представления данных
 class ChartData {
@@ -48,13 +49,14 @@ const TypesChart: React.FC<BoardProductionProps> = ({ edgeData }) => {
     
    
     return (
-        <div className="col-12" style={{ width : "100%", height:"400px" }}>
+        <div style={{ width : "100%", height:"400px" }}>
             <h3 className="text-center">Тип ГСП</h3>
+
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                     data={data2}
                     layout="vertical"
-                    margin={{ top: 5, right: 10, bottom: 20, left: 10 }}
+                    margin={{ top: 5, right: 40, bottom: 20, left: 10}}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" dataKey="value" hide />
@@ -65,14 +67,15 @@ const TypesChart: React.FC<BoardProductionProps> = ({ edgeData }) => {
                         
                     />
                     <Tooltip />
-                    <Bar dataKey="value" fill="#3498db" animationDuration={500}>
-                        <LabelList position="right"
+                    <Bar dataKey="value" fill="#3498db" animationDuration={500} barSize={50}>
+                        <LabelList position="right" offset={10}
                             formatter={(value: number) => {
                                 return value.toFixed(2) ;
                             }} />
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>
+
         </div>
     );
 };
