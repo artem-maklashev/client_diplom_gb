@@ -15,7 +15,7 @@ function NavigationBar({ tokenValid, onLogout }: NavigationBarProps) {
     };
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary fixed-top " bg="dark" data-bs-theme="dark" >
+        <Navbar expand="lg" className="bg-body-tertiary fixed-top mb-5" bg="dark" data-bs-theme="dark" >
             <div className="container-fluid">
                 <NavbarBrand as={Link} to="/">Декоратор</NavbarBrand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,7 +27,7 @@ function NavigationBar({ tokenValid, onLogout }: NavigationBarProps) {
                             <NavDropdown.Item as={Link} to="/boardDelays">Простои</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/boardDefects">Брак</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link as={Link} to="/boardReport" disabled={true}>Выпуск ГСП</Nav.Link>
+                        <Nav.Link as={Link} to="/boardReport" disabled={false}>Выпуск ГСП</Nav.Link>
                         {tokenValid ? (
                             <Nav.Link as={Link} to="/login" onClick={handleLogout}>Logout</Nav.Link>
                         ) : (

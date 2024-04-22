@@ -10,6 +10,7 @@ import Footer from "./components/navigation/Footer";
 import RegistrationPage from "./components/pages/RegistrationPage";
 import LoginPage from "./components/pages/LoginPage";
 import { api, setAuthToken } from "./service/Api";
+import BoardProductionPage from './components/pages/boardProductionInput/BoardProduction';
 
 // function App() {
 //     const [validatingToken, setValidatingToken] = useState(true);
@@ -118,7 +119,7 @@ function App() {
                 <Route path="/board" element={tokenValid ? <GypsumBoardShow2 /> : <Navigate to="/login" />} />
                 <Route path="/boardDelays" element={tokenValid? <DelaysShow /> : <Navigate to="/login" />} />
                 <Route path="/boardDefects" element={tokenValid ? <DefectsShow /> : <Navigate to="/login" />} />
-                <Route path="/boardReport" element={tokenValid? <BoardProductionInputForm /> : <Navigate to="/login" />} />
+                <Route path="/boardReport" element={tokenValid? <BoardProductionPage /> : <Navigate to="/login" />} />
                 <Route path="/" element={tokenValid ? <MainPage /> : <Navigate to="/login" />} />
                 {/*<Route path="/" element={<MainPage />} />*/}
                 <Route path="/register" element={<RegistrationPage />} />

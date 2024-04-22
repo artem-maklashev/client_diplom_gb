@@ -5,18 +5,18 @@ import ProductTypes from "../ProductTypes";
 class ProductionList {
     id: number;
     productionStart: Date;
-    productionEnd: Date;
+    productionFinish: Date;
     productionDate: Date;
     shift: Shift;
-    pTypeId: ProductTypes;
+    type: ProductTypes;
 
     constructor(id: number, pStart: Date, pEnd: Date, pDate: Date, shift: Shift,pTypeId: ProductTypes ) {
         this.id = id;
         this.productionStart = pStart;
-        this.productionEnd = pEnd;
+        this.productionFinish = pEnd;
         this.productionDate = pDate;
         this.shift = shift;
-        this.pTypeId = pTypeId;
+        this.type = pTypeId;
     }
 
 

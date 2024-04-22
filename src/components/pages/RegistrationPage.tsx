@@ -19,7 +19,7 @@ const RegistrationPage: React.FC = () => {
     // Объявляем функцию registerUser
     const registerUser = async () => {
         try {
-            const response = await fetch('http://localhost:8080/auth/register', {
+            const response = await fetch(`${process.env.REACT_APP_AUTH_URL}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
